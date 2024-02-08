@@ -1,0 +1,16 @@
+project:
+  output-dir: _output
+  type: website
+  render:
+    - "*.qmd"
+
+website:
+  title : "REPORT"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+
+
