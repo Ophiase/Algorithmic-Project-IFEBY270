@@ -1,4 +1,4 @@
-TESTS = fourier_motzkin
+TESTS = simplexe
 
 test:
 	$(foreach test,$(TESTS),python3 -m unittest tests.$(test);)

@@ -1,11 +1,11 @@
 import unittest
 from .utils import describe_test
-from src.algorithm.fourier_motzkin.fourier_motzkin import FourierMotzkin
+from src.algorithm.simplexe.simplexe import Simplexe
 
-class TestFourierMotzkin(unittest.TestCase):
+class TestSimplexe(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        describe_test("Fourier Motzkin")
+        describe_test("Simplexe")
 
     def test_something(self):
         assert(True)
