@@ -5,12 +5,19 @@ project:
     - "*.qmd"
 
 website:
-  title : "REPORT"
+  title : "Report"
+  sidebar:
+    contents:
+      - section: "Algorithms"
+        contents:
+          - simplexe.qmd
+          - nash_equilibrium.qmd
 
 format:
   html:
     theme: cosmo
     toc: true
     number-sections: true
-
-
+  pdf:
+    theme: cosmo
+    toc: true
