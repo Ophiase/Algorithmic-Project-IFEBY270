@@ -1,4 +1,4 @@
-TESTS = simplexe
+TESTS = simplexe nash_equilibrium
 
 test:
 	$(foreach test,$(TESTS),python3 -m unittest tests.$(test);)
