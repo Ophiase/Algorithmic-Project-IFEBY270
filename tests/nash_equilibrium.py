@@ -15,8 +15,8 @@ class TestNashEquilibrium(unittest.TestCase):
             wanted_equilibrium : np.array):
         
         solution = NashEquilibrium(A, B).solve()
-        assert (solution == wanted_equilibrium, 
-                f"Error: wrong nash equilibrium. Wanted: {wanted_equilibrium}, Computed: {solution}")
+        assert solution == wanted_equilibrium, \
+            f"Error: wrong nash equilibrium. \nWanted: {wanted_equilibrium}, Computed: {solution}"
         
     def test_object_creation(self):
         NashEquilibrium(
@@ -24,14 +24,14 @@ class TestNashEquilibrium(unittest.TestCase):
             np.array([[2, 1], [3, 2]])
             )
         
-    @unittest. skip("Not implemented")
+    @unittest.skip("Not implemented")
     def test_game_00(self):
         TestNashEquilibrium.check_equilibrium_check(
             np.array([[3, 2], [1, 4]]), 
             np.array([[2, 1], [3, 2]]), 
             3)
     
-    @unittest. skip("Not implemented")
+    @unittest.skip("Not implemented")
     def test_game_01(self):
         TestNashEquilibrium.check_equilibrium_check(
             np.array([[1, 2], [3, 4]]), 
