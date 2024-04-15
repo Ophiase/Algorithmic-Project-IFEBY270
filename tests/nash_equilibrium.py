@@ -16,14 +16,19 @@ class TestNashEquilibrium(unittest.TestCase):
         
         print(f"A: {A}")
         print(f"B: {B}")
+        print()
 
         solution = NashEquilibrium(A, B).solve()
+
         print(
             f"\033[92mSolution\033[94m : " + \
             f"{solution[0]}, {solution[1]}" + \
-            "\033[0m\n"
-            )
+            "\033[0m")
         
+        print(
+            f"\033[92mScore\033[94m : " + \
+            f"{NashEquilibrium.score(A, B, solution)}"
+            "\033[0m\n")
 
         # assert solution == wanted_equilibrium, \
         #     f"Error: wrong nash equilibrium. \nWanted: {wanted_equilibrium}, Computed: {solution}"
@@ -41,7 +46,7 @@ class TestNashEquilibrium(unittest.TestCase):
             np.array([[2, 1], [3, 2]]), 
             None)
     
-    @unittest.skip("Not implemented")
+    #@unittest.skip("Not implemented")
     def test_game_01(self):
         TestNashEquilibrium.check_equilibrium_check(
             np.array([[1, 2], [3, 4]]), 

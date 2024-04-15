@@ -22,11 +22,14 @@ class NashEquilibrium:
         self.max_regret_b = np.max(B) - np.min(B)
 
     @staticmethod
-    def score(solution : tuple) -> tuple:
-        raise NotImplementedError()
+    def score(A, B, solution : tuple) -> tuple:
+        return (
+            solution[0] @ A @ solution[1],
+            solution[0] @ B @ solution[1]
+        )
 
     @staticmethod
-    def is_optimal(solution : tuple) -> bool:
+    def is_valid(solution : tuple) -> bool:
         raise NotImplementedError()
 
     @staticmethod
@@ -76,20 +79,25 @@ class NashEquilibrium:
         for gain in self.potential_gain_b:
             self.prob += self.max_gain_b >= gain
 
+    def _compute_risk(self):
+        pass #TODO
+
+    def _best_strategy_constraint(self):
+        pass #TODO
+        # if xi > 0 => ri = 0
+        # if xi = 0 => ri <= S
+        # therefore ri <= (1-delta_i).S
+
     def _make_constraints(self):
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
         self.prob += pulp.lpSum(self.xb) == 1.0 # stochastic vectors
 
         self._compute_potential_gain()
         self._compute_max_gain()
-        #self._compute #TODO
-
-        # if xi > 0 => ri = 0
-        # if xi = 0 => ri <= S
-        # therefore ri <= (1-delta_i).S
+        self._compute_risk()
+        self._best_strategy_constraint
         
         #raise NotImplementedError()
-
 
     def solve(self, verbose = False) -> np.array:
         self.prob = pulp.LpProblem("Nash_Equilibrium", pulp.LpMinimize)
