@@ -22,6 +22,14 @@ class NashEquilibrium:
         self.max_regret_b = np.max(B) - np.min(B)
 
     @staticmethod
+    def score(solution : tuple) -> tuple:
+        raise NotImplementedError()
+
+    @staticmethod
+    def is_optimal(solution : tuple) -> bool:
+        raise NotImplementedError()
+
+    @staticmethod
     def _init_xrs_variables(i, x, r, s, potential_gain, letter, r_bound):
         x.append(pulp.LpVariable(f"x{letter}_{i}", lowBound=0, upBound=1)) # [0, 1]
         r.append(pulp.LpVariable(f"r{letter}_{i}", lowBound=0, upBound=r_bound)) # >= 0
@@ -54,30 +62,37 @@ class NashEquilibrium:
             f"max_gain_b", lowBound=0, upBound=self.max_regret_b)
 
     def _compute_potential_gain(self):
-        # 
-        raise NotImplementedError()
+        for i in range(self.m):
+            self.prob += self.potential_gain_a[i] ==  \
+                pulp.lpSum([self.A[i][j] * self.xb[j] for j in range(self.n)])
+
+        for j in range(self.n):
+            self.prob += self.potential_gain_b[j] ==  \
+                pulp.lpSum([self.B[i][j] * self.xa[i] for i in range(self.m)])
 
     def _compute_max_gain(self):
-        raise NotImplementedError()
+        for gain in self.potential_gain_a:
+            self.prob += self.max_gain_a >= gain
+        for gain in self.potential_gain_b:
+            self.prob += self.max_gain_b >= gain
 
     def _make_constraints(self):
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
         self.prob += pulp.lpSum(self.xb) == 1.0 # stochastic vectors
 
-        # compute potential gains
         self._compute_potential_gain()
-        # compute max gains
         self._compute_max_gain()
+        #self._compute #TODO
 
         # if xi > 0 => ri = 0
         # if xi = 0 => ri <= S
         # therefore ri <= (1-delta_i).S
         
-        raise NotImplementedError()
+        #raise NotImplementedError()
 
 
     def solve(self, verbose = True) -> np.array:
-        self.prob = pulp.LpProblem("Nash Equilibrium", pulp.LpMinimize)
+        self.prob = pulp.LpProblem("Nash_Equilibrium", pulp.LpMinimize)
 
         # VARIABLES
         self._init_variables()
@@ -103,6 +118,7 @@ class NashEquilibrium:
 
         # EXTRACT STRATEGIE
 
-        # TODO
-
-        return self.solution
+        return (
+            np.array([v.varValue for v in self.xa]),
+            np.array([v.varValue for v in self.xb])
+        )
