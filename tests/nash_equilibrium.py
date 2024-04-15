@@ -14,6 +14,9 @@ class TestNashEquilibrium(unittest.TestCase):
             A : np.array, B : np.array, 
             wanted_equilibrium : tuple):
         
+        print(f"A: {A}")
+        print(f"B: {B}")
+
         solution = NashEquilibrium(A, B).solve()
         print(
             f"\033[92mSolution\033[94m : " + \

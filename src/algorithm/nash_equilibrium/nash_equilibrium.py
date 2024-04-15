@@ -1,8 +1,8 @@
 import numpy as np
 import pulp
 
-import contextlib
-from contextlib import contextmanager, suppress
+# import contextlib
+# from contextlib import contextmanager, suppress
 
 '''
     Find the pair of strategy (x, y) that corresponds to a nash equilibrium for a gain matrix A, B.
@@ -91,7 +91,7 @@ class NashEquilibrium:
         #raise NotImplementedError()
 
 
-    def solve(self, verbose = True) -> np.array:
+    def solve(self, verbose = False) -> np.array:
         self.prob = pulp.LpProblem("Nash_Equilibrium", pulp.LpMinimize)
 
         # VARIABLES
@@ -105,8 +105,7 @@ class NashEquilibrium:
             # + pulp.abs(pulp.lpSum(ra) - pulp.lpSum(rb)) # contrast ?
 
         # SOLVE
-        with contextlib.redirect_stdout(None):
-            self.prob.solve()
+        self.prob.solve(pulp.apis.PULP_CBC_CMD(msg=False))
     
         if verbose :
             print(f"Status: {pulp.LpStatus[self.prob.status]}")
