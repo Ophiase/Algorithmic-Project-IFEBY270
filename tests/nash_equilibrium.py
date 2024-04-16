@@ -12,7 +12,7 @@ class TestNashEquilibrium(unittest.TestCase):
     @staticmethod
     def check_equilibrium_check(
             A : np.array, B : np.array, 
-            wanted_equilibrium : tuple):
+            wanted_equilibrium : tuple = None):
         
         print(f"A: {A}")
         print(f"B: {B}")
@@ -25,10 +25,16 @@ class TestNashEquilibrium(unittest.TestCase):
             f"{solution[0]}, {solution[1]}" + \
             "\033[0m")
         
+        print()
         print(
-            f"\033[92mScore\033[94m : " + \
+            f"\033[92mCurrent Score\033[94m : " + \
             f"{NashEquilibrium.score(A, B, solution)}"
             "\033[0m\n")
+        if wanted_equilibrium is not None:
+            print(
+                f"\033[92mWanted Score\033[94m  : " + \
+                f"{wanted_equilibrium}"
+                "\033[0m\n")
 
         # assert solution == wanted_equilibrium, \
         #     f"Error: wrong nash equilibrium. \nWanted: {wanted_equilibrium}, Computed: {solution}"
