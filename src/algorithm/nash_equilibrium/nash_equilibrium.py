@@ -80,7 +80,12 @@ class NashEquilibrium:
             self.prob += self.max_gain_b >= gain
 
     def _compute_risk(self):
-        pass #TODO
+        for i in range(self.m):
+            self.prob += self.ra[i] == \
+                (self.max_gain_a - self.potential_gain_a[i])
+        for j in range(self.n) :
+            self.prob += self.rb[j] == \
+                (self.max_gain_b - self.potential_gain_b[i])
 
     def _best_strategy_constraint(self):
         pass #TODO
@@ -100,6 +105,13 @@ class NashEquilibrium:
         #raise NotImplementedError()
 
     def solve(self, verbose = False) -> np.array:
+        '''
+            Returns a couple (x,y) of pure strategies that corresponds 
+            to a Nash Equilibrium.
+            Validity and Scores of this couple can be verified 
+            using the static methods is_valid and score,
+
+        '''
         self.prob = pulp.LpProblem("Nash_Equilibrium", pulp.LpMinimize)
 
         # VARIABLES
