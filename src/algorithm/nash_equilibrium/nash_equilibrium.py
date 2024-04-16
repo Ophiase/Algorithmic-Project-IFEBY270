@@ -88,10 +88,14 @@ class NashEquilibrium:
                 (self.max_gain_b - self.potential_gain_b[i])
 
     def _best_strategy_constraint(self):
-        pass #TODO
-        # if xi > 0 => ri = 0
-        # if xi = 0 => ri <= S
-        # therefore ri <= (1-delta_i).S
+
+        for i in range(self.m):
+            self.prob += self.sa[i] == (self.xa[i] != 0)
+            self.prob += self.ra[i] <= (1 - self.sa[i]) * self.max_regret_a
+
+        for j in range(self.n) :
+            self.prob += self.sb[j] == (self.xb[j] != 0)
+            self.prob += self.rb[j] <= (1 - self.sb[j])*self.max_regret_b
 
     def _make_constraints(self):
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
@@ -100,7 +104,7 @@ class NashEquilibrium:
         self._compute_potential_gain()
         self._compute_max_gain()
         self._compute_risk()
-        self._best_strategy_constraint
+        self._best_strategy_constraint()
         
         #raise NotImplementedError()
 

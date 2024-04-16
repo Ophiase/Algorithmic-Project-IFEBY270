@@ -53,5 +53,16 @@ class TestNashEquilibrium(unittest.TestCase):
             np.array([[4, 3], [2, 1]]), 
             None)
         
+    #@unittest.skip("Not implemented")
+    def test_game_paper_rock_scissor(self):
+        A = np.array([
+            [1,0,-1],
+            [0,-1,1],
+            [-1,1,0]
+        ])
+
+        TestNashEquilibrium.check_equilibrium_check(
+            A, -A, (0,0))
+        
 if __name__ == '__main__':
     unittest.main()
