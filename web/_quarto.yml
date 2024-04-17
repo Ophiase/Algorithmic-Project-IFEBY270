@@ -1,17 +1,13 @@
 project:
   output-dir: _output
-  type: website
-  render:
-    - "*.qmd"
+  type: book
 
-website:
-  title : "Report"
-  sidebar:
-    contents:
-      - section: "Algorithms"
-        contents:
-          - simplexe.qmd
-          - nash_equilibrium.qmd
+book:
+  title : "Report - Algorithmic Project IFEBY270"
+  chapters:
+    - index.qmd
+    - simplexe.qmd
+    - nash_equilibrium.qmd
 
 format:
   html:

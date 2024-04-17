@@ -133,8 +133,6 @@ class NashEquilibrium:
         self._compute_max_gain()
         self._compute_risk()
         self._best_strategy_constraint()
-        
-        #raise NotImplementedError()
 
     def solve(self, verbose = False) -> np.array:
         '''
