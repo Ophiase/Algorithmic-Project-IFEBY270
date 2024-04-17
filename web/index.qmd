@@ -1,5 +1,5 @@
 ---
-title: "Report - Algorithmic Project (IFEBY270)"
+title: "Introduction"
 ---
 
 An algorithmic project for a University course.

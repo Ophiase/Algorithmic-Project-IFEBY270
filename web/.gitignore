@@ -1,2 +1,5 @@
 /.quarto/
 /_output
+*.html
+*.tex
+*_files

@@ -5,3 +5,6 @@ test:
 
 test_verbose:
 	$(foreach test,$(TESTS),python3 -m unittest tests.$(test) -v;)
+
+preview_web:
+	cd web; quarto preview

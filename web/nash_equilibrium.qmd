@@ -1,3 +1,17 @@
 ---
 title: Nash Equilibrium
 ---
+
+In game theory we consider two rational agents $x$ and $y$ that both want to maximize their score. \
+In discrete cases, $x$ has $m$ possible actions, $y$ has n possible actions. 
+
+If $x$ and $y$ play simultaneously, we can considers the matrices $A$ and $B$ of dimension $(m,n)$. \
+$A_{i,j}$ and $B_{i, j}$ represents respectivily the score of $x$ and $y$ when $x$ plays his $i$-th action and $y$ his $j$-th action.
+
+## Code
+
+To find the nash equilibrium, create a NashEquilibrium object, and solve it.
+
+```python
+solution_x, solution_y = NashEquilibrium(A, B).solve()
+```
