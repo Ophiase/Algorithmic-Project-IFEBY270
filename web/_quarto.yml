@@ -16,4 +16,5 @@ format:
     number-sections: true
   pdf:
     theme: cosmo
+    title: "Report_Algorithmic_Project_IFEBY270"
     toc: true

@@ -75,3 +75,12 @@ print(solution_x, solution_y)
 ## Modelization
 
 We solve this problem using pulp with mixted linear programming (linear + discrete).
+
+Variables :
+TODO
+
+Constraints :
+TODO
+
+Objective function :
+TODO
