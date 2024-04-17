@@ -29,8 +29,36 @@ class NashEquilibrium:
         )
 
     @staticmethod
-    def is_valid(solution : tuple) -> bool:
-        raise NotImplementedError()
+    def is_valid(A, B, solution : tuple, 
+                 verbose : bool = False) -> bool:
+        '''
+            Check if a solution is indeed a nash equilibrium for the matrices A and B
+        '''
+
+        x, y = solution
+
+        current_gain_a = np.dot(np.dot(x, A), y)
+        current_gain_b = np.dot(np.dot(x, B), y) 
+
+        max_gain_a = np.max(np.dot(A, y))
+        max_gain_b = np.max(np.dot(x, B))
+
+        is_a_valid = current_gain_a == max_gain_a
+        is_b_valid = current_gain_b == max_gain_b
+
+        if verbose:
+            if not is_a_valid :
+                print("x is not valid")
+                print(f"Wanted gain: {max_gain_a}")
+            if not is_b_valid :
+                print("y is not valid")
+                print(f"Wanted gain: {max_gain_b}")
+
+        return is_a_valid and is_b_valid
+    
+    @staticmethod
+    def to_pure(solution : tuple) -> bool:
+        raise NotImplemented()
 
     @staticmethod
     def _init_xrs_variables(i, x, r, s, potential_gain, letter, r_bound):
@@ -140,7 +168,6 @@ class NashEquilibrium:
         self.solution = pulp.value(self.prob.objective)
 
         # EXTRACT STRATEGIE
-
         return (
             np.array([v.varValue for v in self.xa]),
             np.array([v.varValue for v in self.xb])
