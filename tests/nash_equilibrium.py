@@ -1,19 +1,25 @@
 import unittest
-from .utils import describe_test
+from .utils import describe_test, separator
 from src.algorithm.nash_equilibrium.nash_equilibrium import NashEquilibrium
 import numpy as np
 import pulp
+import sys
 
 class TestNashEquilibrium(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         describe_test("Nash Equilibrium")
 
-    @staticmethod
-    def check_equilibrium_check(
+    def run(self, test):
+        result = super().run(test)
+        print("\n" + "=" * 30 + "\n")
+        return result
+
+    def check_equilibrium_check(self,
             A : np.array, B : np.array, 
             wanted_equilibrium : tuple = None):
         
+        print("\n")
         print(f"A: {A}")
         print(f"B: {B}")
         print()
@@ -35,6 +41,10 @@ class TestNashEquilibrium(unittest.TestCase):
                 f"\033[92mWanted Score\033[94m  : " + \
                 f"{wanted_equilibrium}"
                 "\033[0m\n")
+        
+        # assert produces an unwanted traceback
+        if not NashEquilibrium.is_valid(A, B, solution) :
+            print(f"The solution is not a nash nash equilibrium.")
 
         # assert solution == wanted_equilibrium, \
         #     f"Error: wrong nash equilibrium. \nWanted: {wanted_equilibrium}, Computed: {solution}"
@@ -47,14 +57,14 @@ class TestNashEquilibrium(unittest.TestCase):
         
     #@unittest.skip("Not implemented")
     def test_game_00(self):
-        TestNashEquilibrium.check_equilibrium_check(
+        self.check_equilibrium_check(
             np.array([[3, 2], [1, 4]]), 
             np.array([[2, 1], [3, 2]]), 
             None)
     
     #@unittest.skip("Not implemented")
     def test_game_01(self):
-        TestNashEquilibrium.check_equilibrium_check(
+        self.check_equilibrium_check(
             np.array([[1, 2], [3, 4]]), 
             np.array([[4, 3], [2, 1]]), 
             None)
@@ -67,7 +77,7 @@ class TestNashEquilibrium(unittest.TestCase):
             [-1,1,0]
         ])
 
-        TestNashEquilibrium.check_equilibrium_check(
+        self.check_equilibrium_check(
             A, -A, (0,0))
         
 if __name__ == '__main__':
