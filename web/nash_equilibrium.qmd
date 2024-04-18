@@ -51,25 +51,31 @@ import numpy as np
 from src.algorithm.nash_equilibrium.nash_equilibrium import NashEquilibrium
 ```
 
-```{python, hide}
+```{python}
 # Paper Rock Scissor
-
 A = np.array([
     [1,0,-1],
     [0,-1,1],
     [-1,1,0]
 ])
 solution_x, solution_y = NashEquilibrium(A, -A).solve()
-print(solution_x, solution_y)
+```
+```{python}
+#| echo: false
+print(f"x: {solution_x}")
+print(f"y: {solution_y}")
 ```
 
 ```{python}
 # Non-zero sum game
-
 A = np.array([[1, 2], [3, 4]]) 
 B = np.array([[4, 3], [2, 1]])
 solution_x, solution_y = NashEquilibrium(A, B).solve()
-print(solution_x, solution_y)
+```
+```{python}
+#| echo: false
+print(f"x: {solution_x}")
+print(f"y: {solution_y}")
 ```
 
 
