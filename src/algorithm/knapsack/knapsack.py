@@ -61,4 +61,28 @@ class KnapSack:
             if(self.items_weights[i_array[i]] <= weight_available):
                 weight_available -= self.items_weights[i_array[i]]
                 lower_bound += self.items_values[i_array[i]]
-        return lower_bound    
+        return lower_bound
+    
+    def branch_and_bound(self):
+        """
+            Solve the knapsack problem with a branch and bound approach.
+        """
+        value1 = 0
+        if (self.weight_capacity >= self.items_weights[0]):
+            with_first_item = KnapSack(self.weight_capacity-self.items_weights[0],self.items_weights[1:],self.items_values[1:])
+            value1 = self.items_values[0] + with_first_item.branch_and_bound()
+        withouth_first_item = KnapSack(self.weight_capacity,self.items_weights[1:],self.items_values[1:])
+        value2 = withouth_first_item.branch_and_bound()
+        return max(value1,value2)
+    
+    def dynamic_prog(self):
+        """
+            Solve the knapsack problem with dynamic programmation.
+        """
+        return 0
+    
+    def dynamic_prog_scale_change(self):
+        """
+            Solve the knapsack problem with dynamic programmation.
+        """
+        return 0
