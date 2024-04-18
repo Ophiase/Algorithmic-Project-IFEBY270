@@ -8,7 +8,7 @@ class TestSimplexe(unittest.TestCase):
         describe_test("Simplexe")
 
     def test_1(self):
-        print()
+        print("\033[92mExpected Optimal Solution for Test 1: [8.0, 4.0, 0, 18.0, 0, 0]\033[0m")
         canonical_form = [
             [3, 1, 2],
             [1, 1, 3, 30],
@@ -20,9 +20,8 @@ class TestSimplexe(unittest.TestCase):
         simplexe.execute_simplexe()
         simplexe.print_all()
 
-
     def test_2(self):
-        print()
+        print("\033[92mExpected Optimal Solution for Test 2: [2.0, 0.0, 0, 1.0, 0]\033[0m")
         canonical_form = [
             [1, 1],
             [1, 0, 2],
@@ -35,7 +34,7 @@ class TestSimplexe(unittest.TestCase):
         simplexe.print_all()
 
     def test_3(self):
-        print()
+        print("\033[92mExpected Optimal Solution for Test 3: [626.086956521739, 334.7826086956522, 0, 0, 486.9565217391296]\033[0m")
         canonical_form = [
             [900, 1000],
             [11, 9, 9900],
@@ -47,7 +46,7 @@ class TestSimplexe(unittest.TestCase):
         simplexe.print_all()
 
     def test_unbounded(self):
-        print()
+        print("\033[92mExpected Optimal Solution for Test Unbounded: [0, 0, 3, 5]\033[0m")
         canonical_form = [
             [1, 2],
             [-1, -1, 3],
