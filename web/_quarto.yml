@@ -1,16 +1,21 @@
 project:
   output-dir: _output
-  type: website
-  render:
-    - "*.qmd"
+  type: book
 
-website:
-  title : "REPORT"
+book:
+  title : "Report - Algorithmic Project IFEBY270"
+  chapters:
+    - index.qmd
+    - simplexe.qmd
+    - nash_equilibrium.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: cosmos
+    # cosmos, darkly, sandstone, sketchy
     toc: true
     number-sections: true
-
-
+  pdf:
+    theme: cosmo
+    title: "Report_Algorithmic_Project_IFEBY270"
+    toc: true

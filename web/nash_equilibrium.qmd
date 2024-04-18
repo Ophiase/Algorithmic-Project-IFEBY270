@@ -1,0 +1,123 @@
+---
+title: Nash Equilibrium
+---
+
+## Introduction
+
+In game theory we consider two rational agents $x$ and $y$ that both want to maximize their score. \
+In discrete cases, $x$ has $m$ possible actions, $y$ has n possible actions. 
+
+If $x$ and $y$ play simultaneously, we can considers the matrices $A$ and $B$ of dimension $(m,n)$. \
+$A_{i,j}$ and $B_{i, j}$ represents respectivily the score of $x$ and $y$ when $x$ plays his $i$-th action and $y$ his $j$-th action.
+
+For convenience, we will also call player $x$ as $a$, and $y$ as $b$.
+
+### <ins>Definition</ins> Stochastic vector and Strategie
+Let $v$ a vector. If $\sum v_i = 1$ and $\forall i, v_i \geq 0$, $v$ is a stochastic vector.
+
+We call the strategy of the player $x$ and $y$, the stochastic vectors $x$, $y$ that represents the probabilty of choosing each actions.
+If only one coefficient of a strategy is none negative (ie. equal to one), we call it a pure strategy.
+
+A best strategy $\overline v$ is a strategy that maximise the gain of its player : \
+
+* $\overline x \in \arg \max_x x A y^t$
+* $\overline y \in \arg \max_x x B y^t$
+
+<ins>Propertie :</ins> A best strategy is always of convex combination of pure strategies.
+
+### <ins>Definition</ins> Zero-sum game 
+Zero-sum game is defined by $B = -A$, which means every gain for $x$ is a loss of the same amplitude to $y$, and the other way around.
+
+
+### <ins>Definition</ins> Nash equilibrium 
+A nash equilibrium is a couple $(x, y)$ of strategies, where $x$ and $y$ are both best strategies.
+
+#### <ins>Theorem:</ins> A nash equilibrium always exists.
+Remark: If we impose strategies to be pure, the theorem doesn't hold. (eg: paper, rock, scissor)
+
+## Code
+
+To find the nash equilibrium, create a NashEquilibrium object, and solve it.
+
+```python
+solution_x, solution_y = NashEquilibrium(A, B).solve()
+```
+
+### Examples
+
+```{python}
+#| echo: false
+import numpy as np
+from src.algorithm.nash_equilibrium.nash_equilibrium import NashEquilibrium
+```
+
+```{python}
+# Paper Rock Scissor
+A = np.array([
+    [1,0,-1],
+    [0,-1,1],
+    [-1,1,0]
+])
+solution_x, solution_y = NashEquilibrium(A, -A).solve()
+```
+```{python}
+#| echo: false
+print(f"x: {solution_x}")
+print(f"y: {solution_y}")
+```
+
+```{python}
+# Non-zero sum game
+A = np.array([[1, 2], [3, 4]]) 
+B = np.array([[4, 3], [2, 1]])
+solution_x, solution_y = NashEquilibrium(A, B).solve()
+```
+```{python}
+#| echo: false
+print(f"x: {solution_x}")
+print(f"y: {solution_y}")
+```
+
+
+## Modelization
+
+We solve this problem using pulp with mixted linear programming (linear + discrete).
+
+### Variables :
+
+| Variable | Player a | Player b | Domain
+|- | - | - | - |
+| Strategies | $x_{a1}, \dots, x_{am}$ | $x_{b1}, \dots, x_{bn}$ | $[0,1]$ |
+| Strategies supports | $s_{a1}, \dots s_{am}$ | $s_{b1}, \dots, s_{bn}$ | $\{0, 1\}$ |
+| Regrets | $r_{a1}, \dots, r_{am}$ | $r_{b1}, \dots r_{bn}$ | $[0, M]$
+| Potential Gain | potential_gain_a | potential_gain_b | $[0, M]$
+| Max Gain (scalar) | max_gain_a | max_gain_b | $[0, M]$
+
+M represents respectively the max regret for $a$ and $b$. \
+$M_a := \max A_{ij} - \min A_{ij}$ \ 
+$M_b := \max B_{ij} - \min B_{ij}$
+
+### Constraints
+#### [Eq Constraint] Stochastic vectors
+$\sum x_{ai} = 1$ \
+$\sum x_{bi} = 1$
+
+#### [Eq Constraint] Potential gain
+potential_gain_a $= A y^t$ \
+potential_gain_b $= x B$
+
+#### [Constraint] Max gain
+$\forall i$ max_gain_a $\geq$ potential_gain_a$_i$ \
+$\forall j$ max_gain_b $\geq$ potential_gain_b$_j$
+
+#### [Eq Constraint] Risk
+$\vec{r_a} =$ potential_gain_a $-$ max_gain_a \
+$\vec{r_b} =$ potential_gain_b $-$ max_gain_b
+
+#### [Constraint] Best strategy constraint
+$\forall i :\quad$ $s_{ai} = 1_{x_{ai} \neq 0}\qquad$ $r_{ai} \leq (1 - s_{ai}) \times M_a$ \
+$\forall j :\quad$ $s_{bj} = 1_{x_{bj} \neq 0}\qquad$ $r_{bj} \leq (1 - s_{bj}) \times M_b$
+
+### Objective function :
+
+**Minimize** : $\sum r_{ai} + \sum r_{bi}$
