@@ -4,6 +4,31 @@ title: Simplexe
 
 ## Introduction
 
+In linear optimization, consider a problem in canonical form: \
+
+$\max\{c^T x \,|\, Ax \leq b, x \geq 0\}$
+
+where:\
+- $x$ is the vector of variables to be determined\
+- $c$ is the vector of coefficients of the objective function\
+- $A$ is the matrix of coefficients of the constraints
+
+Any problem in canonical form can be reformulated into a problem of the form:\
+
+$\max\{c_{0} + c^T x \,|\, Ax + x' = b, x \geq 0\, x' \geq 0\}$\
+
+This form is known as the standard form.
+
+The Simplex algorithm is a method to move from one basic solution to another while seeking to improve the objective function.\
+When an optimal basic solution is reached, i.e. one that maximizes the objective function, the algorithm stops.\
+
+
+### <ins>Definition</ins> Basic solution and optimal basic solution
+
+In the standard form below, we assume $b \geq 0\ $. The constant $c_{0}$ is introduced for technical reasons.\
+In this case, $(x,x'​) = (0,b)$ constitutes a basic solution of the problem, and we also refer to the variables $x'$ as basic and the variables $x$ as non-basic.
+
+
 ## Algorithm
 
 ## Code
