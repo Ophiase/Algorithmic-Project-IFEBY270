@@ -2,8 +2,23 @@ import unittest
 from .utils import describe_test, separator
 from src.algorithm.nash_equilibrium.nash_equilibrium import NashEquilibrium
 import numpy as np
+import re
 import pulp
 import sys
+import subprocess
+
+
+def extract_column_values_from_file(file_path):
+        valeurs1 = []
+        valeurs2 = []
+        with open(file_path, "r") as fichier:
+            for line in fichier:
+                if ":" in line and "[" in line:
+                    valeurs = line.split(":")[1].strip().split()
+                    valeurs1.append(float(valeurs[1]))
+                    valeurs2.append(float(valeurs[2]))
+        return valeurs1,valeurs2
+
 
 class TestNashEquilibrium(unittest.TestCase):
     @classmethod
@@ -79,6 +94,15 @@ class TestNashEquilibrium(unittest.TestCase):
 
         self.check_equilibrium_check(
             A, -A, (0,0))
-        
+
+
+    def test_2x2_Symmetric_Games(self):
+        t1,t2 = extract_column_values_from_file("baked_gamut/2x2_Symmetric_Games.txt")
+        A=  np.array(t1).reshape(2, 2)
+        B=  np.array(t2).reshape(2, 2)
+        self.check_equilibrium_check(A, B, (0, 0))
+
+
+
 if __name__ == '__main__':
     unittest.main()

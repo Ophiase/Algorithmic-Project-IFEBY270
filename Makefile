@@ -19,3 +19,6 @@ render_show:
 	cp -ru src web
 	cd web; quarto render
 	xdg-open web/_output/*.pdf
+
+update_gamut:
+	java -jar gamut.jar -g SymmetricTwoByTwo -f baked_gamut/2x2_Symmetric_Games.txt
