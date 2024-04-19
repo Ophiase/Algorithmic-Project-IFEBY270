@@ -8,6 +8,7 @@ book:
     - index.qmd
     - simplexe.qmd
     - nash_equilibrium.qmd
+    - knapsac.qmd
 
 format:
   html:
