@@ -135,6 +135,8 @@ class Simplexe:
         pivot_result = self.pivot()
         if pivot_result == -1:
             return -1
+        elif pivot_result == 1:
+            return 1
         incoming, outgoing = pivot_result
         self.vars[outgoing - 1] = incoming
 
@@ -155,9 +157,11 @@ class Simplexe:
 
     def execute_simplexe(self):
             while not self.is_optimal():
-                if self.update() == -1:
+                res = self.update()
+                if res == -1:
                     print("[❌]No optimal solution found.")
                     return
-                elif self.pivot() == 1:
+                elif res == 1:
                     print("[✅]Optimal solution found.")
                     return
+            return
