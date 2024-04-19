@@ -1,39 +1,13 @@
-import numpy as np
-from fractions import Fraction
-
-
 class Simplexe:
-    def __init__(self, canonical_form):
-        self.canonical_form = canonical_form
-        self.table = self.init_table(canonical_form)
-
     def init_table(self, canonical_form):
         var_nb = len(canonical_form[0])
         constr_nb = len(canonical_form)
-        
-        table = [[0.0 for _ in range(var_nb + constr_nb)] for _ in range(constr_nb)]
-        
-        for i in range(var_nb): 
-            for j in range(constr_nb):
-                table[j][i] = float(canonical_form[j][i])
-
-        for i in range(1, constr_nb):
-            table[i][var_nb + i - 1] = 1.0
-            table[i][var_nb + constr_nb - 1] = float(canonical_form[i][len(canonical_form[i]) - 1])
-
-        self.vars = []
-        for i in range(var_nb, var_nb + constr_nb - 1):
-            self.vars.append(i)
-                    
+        table = [[0 for _ in range(var_nb + constr_nb)] for _ in range(constr_nb + 1)]
         return table
     
-    def is_optimal(self):
-        return all(elem <= 0 for elem in self.table[0])
-
     def print_table(self):
         for row in self.table:
-            row_str = [str(Fraction(elem).limit_denominator()) for elem in row]
-            print(row_str)
+            print(row)
 
     def print_basic_sol(self):
         if not self.is_optimal():
