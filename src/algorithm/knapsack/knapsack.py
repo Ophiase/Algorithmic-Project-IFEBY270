@@ -66,7 +66,10 @@ class KnapSack:
     def branch_and_bound(self):
         """
             Solve the knapsack problem with a branch and bound approach.
+            WORK IN PROGRESS (bound not implemented)
         """
+        if len(self.items_weights) == 0:
+            return 0
         value1 = 0
         if (self.weight_capacity >= self.items_weights[0]):
             with_first_item = KnapSack(self.weight_capacity-self.items_weights[0],self.items_weights[1:],self.items_values[1:])
@@ -75,11 +78,71 @@ class KnapSack:
         value2 = withouth_first_item.branch_and_bound()
         return max(value1,value2)
     
+    @staticmethod
+    def _sort_by_weight_and_value(array):
+        i = 0
+        while i < len(array):
+            j = i + 1
+            while j < len(array):
+            #sort by value
+                if array[i][0] > array[j][0]:
+                    if array[i][1] <= array[j][1]:
+                        del array[j]
+                        continue #continue skips j += 1
+                elif array[i][0] < array[j][0]:
+                    if array[i][1] >= array[j][1]:
+                        del array[i]
+                        i -= 1
+                        break
+                else : # array[i][0] == array[j][0]
+                    if array[i][1] <= array[j][1]:
+                        del array[j]
+                        continue #continue skips j += 1
+                    else:
+                        del array[i]
+                        i -= 1
+                        break
+            #sort by weight
+                if array[i][1] < array[j][1]:
+                    if array[i][0] >= array[j][0]:
+                        del array[j]
+                        continue #continue skips j += 1
+                elif array[i][1] > array[j][1]:
+                    if array[i][0] <= array[j][0]:
+                        del array[i]
+                        i -= 1
+                        break
+                else: # array[i][1] == array[j][1]:
+                    if array[i][0] >= array[j][0]:
+                        del array[j]
+                        continue #continue skips j += 1
+                    else:
+                        del array[i]
+                        i -= 1
+                        break
+                j += 1
+            i += 1
+        return array
+    
     def dynamic_prog(self):
         """
             Solve the knapsack problem with dynamic programmation.
+            WORK IN PROGRESS
         """
-        return 0
+        S = [[0,0]]
+        for i in range(len(self.items_values)):
+            S_size = len(S)
+            for j in range(S_size):
+                if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
+                    S.append([S[j][0] + self.items_values[i], S[j][1] + self.items_weights[i]])
+            KnapSack._sort_by_weight_and_value(S)    
+        
+        #returns the max value of S
+        max = 0
+        for w in S:
+            if w[0] > max:
+               max = w[0] 
+        return max
     
     def dynamic_prog_scale_change(self):
         """
