@@ -1,6 +1,6 @@
 import unittest
 from .utils import describe_test
-from src.algorithm.knapsack.Subset_sum import SubSet
+from src.algorithm.knapsack.subset_sum import SubSet
 
 class TestSubSet_Sum(unittest.TestCase):
     @classmethod
