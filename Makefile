@@ -1,4 +1,4 @@
-TESTS = simplexe nash_equilibrium
+TESTS = simplexe nash_equilibrium knapsack subset_sum
 
 test:
 	$(foreach test,$(TESTS),python3 -m unittest tests.$(test);)
