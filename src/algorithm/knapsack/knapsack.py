@@ -127,7 +127,6 @@ class KnapSack:
     def dynamic_prog(self):
         """
             Solve the knapsack problem with dynamic programmation.
-            WORK IN PROGRESS
         """
         S = [[0,0]]
         for i in range(len(self.items_values)):
@@ -148,4 +147,4 @@ class KnapSack:
         """
             Solve the knapsack problem with dynamic programmation.
         """
-        return 0
+        return
