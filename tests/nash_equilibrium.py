@@ -102,6 +102,18 @@ class TestNashEquilibrium(unittest.TestCase):
         B=  np.array(t2).reshape(2, 2)
         self.check_equilibrium_check(A, B, (0, 0))
 
+    def test_chicken_game(self):
+        t1,t2 = extract_column_values_from_file("baked_gamut/chicken_game.txt")
+        A=  np.array(t1).reshape(2, 2)
+        B=  np.array(t2).reshape(2, 2)
+        self.check_equilibrium_check(A, B, (0, 0))
+
+    def test_prisoners_dilemma_game(self):
+        t1,t2 = extract_column_values_from_file("baked_gamut/prisoners_dilemma_game.txt")
+        A=  np.array(t1).reshape(2, 2)
+        B=  np.array(t2).reshape(2, 2)
+        self.check_equilibrium_check(A, B, (0, 0))
+
 
 
 if __name__ == '__main__':
