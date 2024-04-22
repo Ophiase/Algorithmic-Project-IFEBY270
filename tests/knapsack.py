@@ -50,6 +50,7 @@ class TestKnapSack(unittest.TestCase):
         assert(KnapSack(9,[2,2,2,2],[2,1,1,1]).dynamic_prog() == 5)
         assert(KnapSack(9,[5,5,4],[10,10,4]).dynamic_prog() == 14)
         assert(KnapSack(9,[7,5,4],[14,9,7]).dynamic_prog() == 16)
+    
     def test_dynamic_prog_scale_change(self):
         assert(True)
 
