@@ -1,4 +1,3 @@
-
 import sys
 
 class KnapSack:
@@ -32,6 +31,11 @@ class KnapSack:
         self._quickSort(0, len(self.items_values)-1)
 
     def upper_bound(self):
+        """
+           Returns an upper_bound in O(n) by sorting the elements of the knapsack by ratio of value/weight
+        Returns:
+            int: an upper_bound of the knapsack maximum value
+        """
         upper_bound = 0.0
         self._sort_by_ratio()
         weight_available = self.weight_capacity
@@ -43,6 +47,11 @@ class KnapSack:
         return upper_bound
 
     def lower_bound(self):
+        """
+           Returns a lower_bound in O(n) by sorting the elements of the knapsack by ratio of value/weight 
+        Returns:
+            int: a lower_bound of the knapsack maximum value
+        """
         lower_bound = 0
         self._sort_by_ratio()
         weight_available = self.weight_capacity
@@ -73,7 +82,10 @@ class KnapSack:
     def solve_branch_and_bound(self, n = 50):
         """
             Solve the knapsack problem with a branch and bound approach.
-            n = exploration depth.
+        Args:
+            n (int): recursion depth
+        Returns:
+            int: the maximum value of the knapsack
         """
         if(n > sys.getrecursionlimit()):
             sys.setrecursionlimit(max(n,10000))
@@ -85,6 +97,14 @@ class KnapSack:
 
     @staticmethod
     def _sort_by_weight_and_value(array):
+        """
+            Removes all unecessary values in the list for the dynamic programmtion solver of knapsack
+        Args:
+            array (list of two ints): the array to sort
+
+        Returns:
+            list of list of two ints: the sorted array
+        """
         i = 0
         while i < len(array):
             j = i + 1
@@ -132,6 +152,8 @@ class KnapSack:
     def solve_dynamic_prog(self):
         """
             Solve the knapsack problem with dynamic programmation.
+        Returns:
+            int: the maximum value of the knapsack
         """
         S = [[0,0]]
         for i in range(len(self.items_values)):
@@ -150,6 +172,8 @@ class KnapSack:
 
     def solve_dynamic_prog_scale_change(self):
         """
-            Solve the knapsack problem with dynamic programmation.
+            Solve the knapsack problem with dynamic programmation and scale change.
+        Returns:
+            int: the maximum value of the knapsack
         """
         return

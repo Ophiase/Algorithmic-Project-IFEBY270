@@ -13,7 +13,10 @@ class SubSet:
     def generate_random_low_density_subset_problem(n = None):
         """
             Generate a random case of the subset problem with low density.
-            n is the number of elements in the generated set. /!\ the elements are exponentials in n, it is not recommanded to set n bigger than 20.
+        Args:
+            n (int): number of elements in the generated set. /!\ the elements are exponentials in n, it is not recommanded to set n bigger than 20.
+        Returns:
+            SubSet: random subset problem
         """
         if(n == None):
             n = random.randrange(20)
@@ -30,7 +33,8 @@ class SubSet:
     def solve_dynamic_prog(self):
         """
             Solve the subset problem using dynamic programmation.
-            returns the target (or the closest value to it), the subset.
+        Returns:
+            int, list: the target (or the closest value to it), and the subset.
         """
         n = len(self.set)
         matrix = [[False] * (self.target + 1) for _ in range(n + 1)]
