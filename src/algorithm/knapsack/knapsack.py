@@ -64,7 +64,6 @@ class KnapSack:
     def _branch_and_bound(self,n):
         if n==0 or len(self.items_weights) == 0:
             return 0, n
-        
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():#if both bounds are equals, then it's the value of the knapsack.
             return upper_bound, n
