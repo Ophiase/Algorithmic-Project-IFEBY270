@@ -13,22 +13,24 @@ class SubSet:
     def generate_random_low_density_subset_problem(n = None):
         """
             Generate a random case of the subset problem with low density.
-            n is the number of elements in the generated set.
+            n is the number of elements in the generated set. /!\ the elements are exponentials in n, it is not recommanded to set n bigger than 20.
         """
         if(n == None):
             n = random.randrange(20)
-        set = [random.randrange(1<<n) for _ in range (n + 1)]
-        return SubSet(set)
+        target = random.randrange(1<<n)
+        set = [random.randrange(min(1<<n,target)) for _ in range (n)]
+        return SubSet(set,target)
 
-    def LLL(self):
+    def solve_LLL(self):
         """
             Solve the subset problem using the LLL algorithm
         """
         return
 
-    def dynamic_prog(self):
+    def solve_dynamic_prog(self):
         """
             Solve the subset problem using dynamic programmation.
+            returns the target (or the closest value to it), the subset.
         """
         n = len(self.set)
         matrix = [[False] * (self.target + 1) for _ in range(n + 1)]
@@ -48,5 +50,20 @@ class SubSet:
                     subset.append(self.set[i - 1])
                     j -= self.set[i - 1]
                 i -= 1
-            return subset[::-1]
-        return None
+            return self.target, subset[::-1]
+        else:
+            # Find the closest value to the target sum
+            closest_sum = 0
+            for i in range(self.target, -1, -1):
+                if matrix[n][i]:
+                    closest_sum = i
+                    break
+            # Reconstruct the subset for the closest sum
+            subset = []
+            i, j = n, closest_sum
+            while i > 0 and j > 0:
+                if matrix[i][j] != matrix[i - 1][j]:
+                    subset.append(self.set[i - 1])
+                    j -= self.set[i - 1]
+                i -= 1
+            return closest_sum, subset[::-1]
