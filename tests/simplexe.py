@@ -17,8 +17,9 @@ class TestSimplexe(unittest.TestCase):
         ]
 
         simplexe = Simplexe(canonical_form)
-        simplexe.execute_simplexe()
-        simplexe.print_all()
+        basic_sol, obj_value = simplexe.execute_simplexe()
+        print("Basic Solution: ", basic_sol)
+        print("Objective function value: ", obj_value)
 
     def test_2(self):
         print("\033[92mExpected Optimal Solution for Test 2: [2.0, 0.0, 0, 1.0, 0]\033[0m")
@@ -30,8 +31,9 @@ class TestSimplexe(unittest.TestCase):
         ]
 
         simplexe = Simplexe(canonical_form)
-        simplexe.execute_simplexe()
-        simplexe.print_all()
+        basic_sol, obj_value = simplexe.execute_simplexe()
+        print("Basic Solution: ", basic_sol)
+        print("Objective function value: ", obj_value)
 
     def test_3(self):
         print("\033[92mExpected Optimal Solution for Test 3: [626.086956521739, 334.7826086956522, 0, 0, 486.9565217391296]\033[0m")
@@ -42,20 +44,21 @@ class TestSimplexe(unittest.TestCase):
             [6, 16, 9600]
         ]
         simplexe = Simplexe(canonical_form)
-        simplexe.execute_simplexe()
-        simplexe.print_all()
+        basic_sol, obj_value = simplexe.execute_simplexe()
+        print("Basic Solution: ", basic_sol)
+        print("Objective function value: ", obj_value)
 
     def test_unbounded(self):
         print("\033[92mExpected Optimal Solution for Test Unbounded: [0, 0, 3, 5]\033[0m")
         canonical_form = [
             [1, 2],
             [-1, -1, 3],
-            [2, 3, 5],
+            [-2, -3, 5],
         ]
 
         simplexe = Simplexe(canonical_form)
-        simplexe.execute_simplexe()
-        simplexe.print_all()
+        basic_sol, obj_value = simplexe.execute_simplexe()
+        print("Basic Solution: ", basic_sol)
 
 if __name__ == '__main__':
     unittest.main()

@@ -27,6 +27,9 @@ class Simplexe:
                     
         return table
     
+    def get_table(self):
+        return self.table
+    
     def is_optimal(self):
         return all(elem <= 0 for elem in self.table[0])
 
@@ -35,29 +38,19 @@ class Simplexe:
             row_str = [str(Fraction(elem).limit_denominator()) for elem in row]
             print(row_str)
 
-    def print_basic_sol(self):
+    def get_basic_sol(self):
         if not self.is_optimal():
             basic_sol = [0 for _ in range(len(self.table[0]) - 1)]
             b = [self.canonical_form[i][-1] for i in range(1, len(self.canonical_form))]
             for j in range(len(self.canonical_form[0]), len(self.table[0]) - 1):
                 basic_sol[j] = self.canonical_form[j-1][-1]
-            print(basic_sol)
+            return basic_sol
         else:
             basic_sol = [0 for _ in range(len(self.table[0]) - 1)]
             for j in range (1, len(self.table)):
                 basic_sol[self.vars[j - 1]] = self.table[j][-1]
-            print(basic_sol)
+            return(basic_sol)
 
-    def print_all(self):
-        if self.is_optimal():
-            print("Optimal basic solution:", end=' ')
-            self.print_basic_sol()
-            print("Objective function value:", end=' ')
-            print(-self.table[0][-1])
-        else:
-            print("Basic solution:", end=' ')
-            self.print_basic_sol()
-    
     def pivot(self):
         table_np = np.array(self.table)
         
@@ -95,26 +88,16 @@ class Simplexe:
 
         self.table = table_copy
 
-    def execute_simplexe(self):
-            while not self.is_optimal():
-                if self.update() == -1:
-                    print("[❌]No optimal solution found.")
-                    return
-                elif self.pivot() == 1:
-                    print("[✅]Optimal solution found.")
-                    return
-                
-    
-
     def print_all(self):
         if self.is_optimal():
             print("Optimal basic solution:", end=' ')
-            self.print_basic_sol()
+            print(self.get_basic_sol())
             print("Objective function value:", end=' ')
             print(-self.table[0][-1])
         else:
             print("Basic solution:", end=' ')
-            self.print_basic_sol()
+            print(self.get_basic_sol())
+
 
     def pivot(self):
         table_np = np.array(self.table)
@@ -156,12 +139,11 @@ class Simplexe:
         self.table = table_copy
 
     def execute_simplexe(self):
-            while not self.is_optimal():
-                res = self.update()
-                if res == -1:
-                    print("[❌]No optimal solution found.")
-                    return
-                elif res == 1:
-                    print("[✅]Optimal solution found.")
-                    return
-            return
+        while not self.is_optimal():
+            res = self.update()
+            if res == -1:
+                print("[❌]No optimal solution found.")
+                return (self.get_basic_sol(), 0)
+        
+        print("[✅]Optimal solution found.")
+        return (self.get_basic_sol(), -self.table[0][-1])
