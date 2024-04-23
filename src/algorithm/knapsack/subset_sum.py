@@ -8,7 +8,7 @@ class SubSet:
         else :
             self.set = set
             self.target = target
-        
+
     @staticmethod
     def generate_random_low_density_subset_problem(n = None):
         """
@@ -19,13 +19,13 @@ class SubSet:
             n = random.randrange(20)
         set = [random.randrange(1<<n) for _ in range (n + 1)]
         return SubSet(set)
-    
+
     def LLL(self):
         """
             Solve the subset problem using the LLL algorithm
         """
         return
-    
+
     def dynamic_prog(self):
         """
             Solve the subset problem using dynamic programmation.

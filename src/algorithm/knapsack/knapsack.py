@@ -1,3 +1,6 @@
+
+import sys
+
 class KnapSack:
     def __init__(self, w, iw, iv):
         self.weight_capacity = w
@@ -21,7 +24,7 @@ class KnapSack:
             pi = self._partition(low, high)
             self._quickSort(low, pi - 1)
             self._quickSort(pi + 1, high)
-    
+
     def _sort_by_ratio(self):
         """
             Sort self.items_weights and self.items_values by ratio items_values/items_weights in descending order.
@@ -48,30 +51,38 @@ class KnapSack:
                 weight_available -= self.items_weights[i]
                 lower_bound += self.items_values[i]
         return lower_bound
-    
+
+    def _branch_and_bound(self,n):
+        if n==0 or len(self.items_weights) == 0:
+            return 0, n
+        
+        upper_bound = self.upper_bound()
+        if upper_bound == self.lower_bound():#if both bounds are equals, then it's the value of the knapsack.
+            return upper_bound, n
+        value1 = 0
+        if (self.weight_capacity >= self.items_weights[0]):
+            with_first_item = KnapSack(self.weight_capacity - self.items_weights[0],self.items_weights[1:],self.items_values[1:])
+            value1, n = with_first_item._branch_and_bound(n-1)
+            value1 += self.items_values[0]
+            if(value1 == upper_bound):#if it's equal to the upper bound, then it's the value of the knapsack.
+                return value1, n
+        withouth_first_item = KnapSack(self.weight_capacity,self.items_weights[1:],self.items_values[1:])
+        value2, n = withouth_first_item._branch_and_bound(n-1)
+        return max(value1,value2), n
+
     def solve_branch_and_bound(self, n = 50):
         """
             Solve the knapsack problem with a branch and bound approach.
             n = exploration depth.
         """
+        if(n > sys.getrecursionlimit()):
+            sys.setrecursionlimit(max(n,10000))
         self._sort_by_ratio()
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():
             return upper_bound
-        return KnapSack._branch_and_bound(self,n)
-        
-        
-    def _branch_and_bound(self,n):
-        if len(self.items_weights) == 0:
-            return 0
-        value1 = 0
-        if (self.weight_capacity >= self.items_weights[0]):
-            with_first_item = KnapSack(self.weight_capacity-self.items_weights[0],self.items_weights[1:],self.items_values[1:])
-            value1 = self.items_values[0] + with_first_item._branch_and_bound(n-1)
-        withouth_first_item = KnapSack(self.weight_capacity,self.items_weights[1:],self.items_values[1:])
-        value2 = withouth_first_item._branch_and_bound(n-1)
-        return max(value1,value2)
-    
+        return KnapSack._branch_and_bound(self,n)[0]
+
     @staticmethod
     def _sort_by_weight_and_value(array):
         i = 0
@@ -117,7 +128,7 @@ class KnapSack:
                 j += 1
             i += 1
         return array
-    
+
     def solve_dynamic_prog(self):
         """
             Solve the knapsack problem with dynamic programmation.
@@ -128,15 +139,15 @@ class KnapSack:
             for j in range(S_size):
                 if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
                     S.append([S[j][0] + self.items_values[i], S[j][1] + self.items_weights[i]])
-            KnapSack._sort_by_weight_and_value(S)    
-        
+            KnapSack._sort_by_weight_and_value(S)
+
         #returns the max value of S
         max = 0
         for w in S:
             if w[0] > max:
-               max = w[0] 
+               max = w[0]
         return max
-    
+
     def solve_dynamic_prog_scale_change(self):
         """
             Solve the knapsack problem with dynamic programmation.
