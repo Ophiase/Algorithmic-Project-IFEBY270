@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 class SubSet:
     def __init__(self, set, target = None):
@@ -23,12 +24,40 @@ class SubSet:
         target = random.randrange(1<<n)
         set = [random.randrange(min(1<<n,target)) for _ in range (n)]
         return SubSet(set,target)
-
+    
+    def create_basis(self):
+        """
+            Create the initial basis for the LLL algorithm
+        Returns:
+            list: the basis
+        """
+        if (len(self.set) == 0 or self.target == 0):
+            self.generate_random_low_density_subset_problem()
+        B = np.identity(len(self.set) + 1)
+        B *= 2
+        B[len(self.set)] = 1
+        for row in B:
+            row[-1] = 1
+        B[len(self.set)] = self.set + [self.target]
+        return B
+                    
     def solve_LLL(self):
         """
             Solve the subset problem using the LLL algorithm
         """
-        return
+        n = len(self.set)
+        self.set.sort()
+        i = n - 1
+        while i >= 0 and self.set[i] > self.target:
+            i -= 1
+        if i < 0:
+            return self.target, []
+        subset = []
+        while i >= 0:
+            subset.append(self.set[i])
+            self.target -= self.set[i]
+            i -= 1
+        return self.target, subset
 
     def solve_dynamic_prog(self):
         """

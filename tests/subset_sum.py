@@ -8,6 +8,8 @@ class TestSubSet_Sum(unittest.TestCase):
         describe_test("Subset Sum")
 
     def test_solve_LLL(self):
+        print()
+        print(SubSet([17,6,12,14,24], 42).create_basis())
         assert(True)
     
     def test_solve_dynamic_prog(self):
