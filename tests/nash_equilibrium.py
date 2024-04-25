@@ -41,6 +41,10 @@ class TestNashEquilibrium(unittest.TestCase):
 
         solution = NashEquilibrium(A, B).solve()
 
+        if solution is None :
+            print("No solution found")
+            assert(False)        
+
         print(
             f"\033[92mSolution\033[94m : " + \
             f"{solution[0]}, {solution[1]}" + \
