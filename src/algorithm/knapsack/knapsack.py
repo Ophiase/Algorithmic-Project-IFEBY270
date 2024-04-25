@@ -6,6 +6,9 @@ class KnapSack:
         self.items_weights = items_weights
         self.items_values = items_values
 
+    def __str__(self):
+        return f"KnapSack of weight capacity : {self.weight_capacity}, of items weights : {self.items_weights} and of items values : {self.items_values}"
+    
     def _partition(self, low, high):
         pivot = self.items_values[high]/self.items_weights[high]
         i = low - 1
