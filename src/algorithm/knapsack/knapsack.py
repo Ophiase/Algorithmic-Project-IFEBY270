@@ -78,16 +78,16 @@ class KnapSack:
         value2,max_iteration = withouth_first_item._branch_and_bound(max_iteration-1)
         return max(value1,value2),max_iteration
 
-    def solve_branch_and_bound(self, max_iteration = 50):
+    def solve_branch_and_bound(self, max_iteration = 50, max_recursion_depth = 1000):
         """
             Solve the knapsack problem with a branch and bound approach.
         Args:
             max_iteration (int): maximum amount of recursive calls.
+            max_recursion_depth (int): maximum depth of recursive calls (no need to modify it unless bag length > 1000).
         Returns:
             int: the maximum value of the knapsack
         """
-        if(max_iteration > sys.getrecursionlimit()):
-            sys.setrecursionlimit(max_iteration)
+        sys.setrecursionlimit(max_recursion_depth)
         self._sort_by_ratio()
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():
