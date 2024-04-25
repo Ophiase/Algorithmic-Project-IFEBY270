@@ -2,6 +2,12 @@ import random
 import numpy as np
 from math import ceil, floor
 
+def print_matrix(matrix):
+    for row in matrix:
+        print("|", end="")
+        for value in row:
+            print("{:10.2f}".format(value), end="")
+        print(" |")
 
 class SubSet:
     def __init__(self, set, target = None):
@@ -42,6 +48,7 @@ class SubSet:
         B[len(self.set)] = 1/2
         for i in range(len(all)):
             B[i][len(self.set)] = all[i] * ceil(root / 2)
+
         return B
     
     def density(self):
@@ -50,7 +57,7 @@ class SubSet:
         Returns:
             float: the density
         """
-        return len(self.set) / np.log2(len(self.target))
+        return len(self.set) / np.log2(self.target)
     
     def RED(self, basis, mu, k, l):
         if np.abs(mu[k][l]) > 1/2:
@@ -82,23 +89,25 @@ class SubSet:
             for j in range(i):
                 mu[i][j] = (basis_c[i] @ b_star[j]) / B[j]
                 b_star[i] = b_star[i] - mu[i][j] * b_star[j]
-                B[i] = b_star[i] @ b_star[i]
+                B[i] = (b_star[i] @ b_star[i])
 
         # Step 3
         k = 1
 
-        while k < n:
+        while (1):
             # Step 4
             basis_c, mu = self.RED(basis_c, mu, k, k - 1)
 
             # Step 5
-            if (B[k] >= (0.75 - mu[k][k-1]*mu[k][k-1]) * B[k-1]):
+            if (B[k] >= (3/4 - mu[k][k-1]*mu[k][k-1]) * B[k-1]):
                 for l in range(k-2,-1,-1):
-                    basis_c, mu = self.RED(basis_c, mu, k,l)
+                    basis_c, mu = self.RED(basis_c, mu, k, l)
                 k += 1
+                if k >= n:
+                    return basis_c
             else:
                 m = mu[k][k-1]
-                b = B[k] - m * m * B[k-1]
+                b = B[k] + m * m * B[k-1]
                 mu[k][k-1] = m * B[k-1] / b
                 B[k] = B[k-1] * B[k] / b
                 B[k-1] = b
@@ -114,9 +123,6 @@ class SubSet:
 
         return basis_c
 
-        
-        return B
-
     def solve_LLL(self):
         """
             Solve the subset problem using the LLL algorithm
@@ -124,10 +130,10 @@ class SubSet:
             int, list: the target (or the closest value to it), and the subset.
         """
         B = self.LLL(self.create_basis())
-        X = np.zeros(len(self.set))
+        X = np.zeros(len(self.set)+1)
         n = len(self.set)
 
-        print(B)
+        print_matrix(B)
 
         for y in B:
             if y[-1] == 0 and (y[i] == 1/2 or y[i] == -1/2 for i in range(len(y) - 1)):
