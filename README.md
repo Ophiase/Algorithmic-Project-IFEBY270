@@ -14,3 +14,8 @@ Execute tests
 make test_verbose # second method
 python3 -m unittest tests.<test_name> # for specific test
 ```
+
+Update Gamut tests
+```bash
+make update_gamut
+```
