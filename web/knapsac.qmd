@@ -3,9 +3,64 @@ title: KnapSac
 ---
 
 ## Introduction
+In integer linear optimization, we consider a weight capacity for a bag, a list of weights of the items, and a list of values of the items.
+The goal of the Knapsack problem is to maximize the value of items placed in the bag without exceeding its weight capacity.
+
+More formally :
+    let $b \in \Bbb N, w_{1},...,w_{n} \in \Bbb N^n, v_{1},...,v_{n} \in \Bbb N^n$\
+    We want to determine $\max_i \{\sum_{i=1}^{n} v_{i}x_{i} | \sum_{i=1}^{n} w_{i}x_{i} < b, x_{i} \in {0,1}, i = 1,..,n\}$
 
 ## Algorithm
 
 ## Code
+To find the solution to the KnapSack problem, create a KnapSack :
+```python
+KnapSack(weight_capacity,array of items weight, array of items value)
+```
+Then chose a solving algorithm between :\
+
+* lower_bound (gives you a lower bound to the knapsack solution)
+* upper_bound (gives you an upper bound to the knapsack solution)
+* solve_branch_and_bound (gives you the exact solution to the knapsack)
+* solve_dynamic_prog (gives you the exact solution to the knapsack)
+* solve_dynamic_prog_scale_change (give you a lower_bound really close to the solution on large KnapSack)
+
 
 ### Examples
+
+```{python}
+#| echo: false
+from src.algorithm.knapsack.knapsack import KnapSack
+```
+
+```{python}
+A = KnapSack(3,[1,1,1,2],[3,2,1,1])
+lower_bound  = A.lower_bound()
+upper_bound  = A.upper_bound()
+solution1    = A.solve_branch_and_bound()
+solution2    = A.solve_dynamic_prog()
+lower_bound2 = A.solve_dynamic_prog_scale_change()
+```
+```{python}
+#| echo: false
+print(f"lower bound: {lower_bound}")
+print(f"upper bound: {upper_bound}")
+print(f"solution 1: {solution1}")
+print(f"solution 2: {solution2}")
+print(f"lower bound 2: {lower_bound2}")
+```
+You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\
+```{python}
+B = A = KnapSack(3,[1,1,1,2],[8,7,3,1])
+solution = A.solve_dynamic_prog()
+lower_bound3 = A.solve_dynamic_prog_scale_change(2)
+lower_bound4 = A.solve_dynamic_prog_scale_change(4)
+lower_bound5 = A.solve_dynamic_prog_scale_change(8)
+```
+```{python}
+#| echo: false
+print(f"solution: {solution}")
+print(f"lower bound 3: {lower_bound3}")
+print(f"lower bound 4: {lower_bound4}")
+print(f"lower bound 5: {lower_bound5}")
+```

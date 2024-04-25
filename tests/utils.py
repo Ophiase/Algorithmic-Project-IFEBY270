@@ -5,3 +5,9 @@ def describe_test(name : str):
 
 def separator(length: int = 30):
     print('-' * length)
+
+def truth_vs_computed(value_name, truth, computed) :
+    if truth != computed:
+        print(f"Wrong {value_name} | Truth: {truth}\t Computed : {computed}")
+        return False
+    return True
