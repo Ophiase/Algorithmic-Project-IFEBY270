@@ -100,7 +100,6 @@ class KnapSack:
             Removes all unecessary values in the list for the dynamic programmtion solver of knapsack
         Args:
             array (list of two ints): the array to sort
-
         Returns:
             list of list of two ints: the sorted array
         """
@@ -169,10 +168,24 @@ class KnapSack:
                max = w[0]
         return max
 
-    def solve_dynamic_prog_scale_change(self):
+    def solve_dynamic_prog_scale_change(self, mu = 2):
         """
             Solve the knapsack problem with dynamic programmation and scale change.
+        Args:
+            mu (int): the int by which the items values will be divided for the scale change.
         Returns:
-            int: the maximum value of the knapsack
+            int: the maximum value of the knapsack.
         """
-        return
+        S = [[0,0]]
+        for i in range(len(self.items_values)):
+            S_size = len(S)
+            for j in range(S_size):
+                if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
+                    S.append([S[j][0] + self.items_values[i]//mu, S[j][1] + self.items_weights[i]])
+            KnapSack._sort_by_weight_and_value(S)
+        #returns the max value of S
+        max = 0
+        for w in S:
+            if w[0] > max:
+               max = w[0]
+        return max*mu

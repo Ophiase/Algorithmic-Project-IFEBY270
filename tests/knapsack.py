@@ -51,8 +51,21 @@ class TestKnapSack(unittest.TestCase):
         assert(KnapSack(9,[5,5,4],[10,10,4]).solve_dynamic_prog() == 14)
         assert(KnapSack(9,[7,5,4],[14,9,7]).solve_dynamic_prog() == 16)
 
-    def test_solve_dynamic_prog_scale_change(self):
-        assert(True)
+    def test_solve_dynamic_prog_scale_change_scale_change(self):
+        assert(KnapSack(1,[2,2,2],[2,1,3]).solve_dynamic_prog_scale_change() == 0)
+        assert(KnapSack(4,[1,1,1,2],[3,2,1,1]).solve_dynamic_prog_scale_change(2) == 4)
+        assert(KnapSack(3,[1,1,1,2],[3,2,1,1]).solve_dynamic_prog_scale_change(2) == 4)
+        assert(KnapSack(2,[1,1,1,2],[3,2,1,1]).solve_dynamic_prog_scale_change(2) == 4)
+        assert(KnapSack(2,[3,2,1,1],[3,2,1,1]).solve_dynamic_prog_scale_change(2) == 2)
+        assert(KnapSack(3,[2,2,2,2],[2,1,1,1]).solve_dynamic_prog_scale_change(2) == 2)
+        assert(KnapSack(9,[2,2,2,2],[2,1,1,1]).solve_dynamic_prog_scale_change(2) == 2)
+        assert(KnapSack(9,[5,5,4],[10,10,4]).solve_dynamic_prog_scale_change(2) == 14)
+        assert(KnapSack(9,[7,5,4],[14,9,7]).solve_dynamic_prog_scale_change(2) == 14)
+        
+        assert(KnapSack(9,[5,5,4],[10,10,4]).solve_dynamic_prog_scale_change(4) == 12)
+        assert(KnapSack(9,[7,5,4],[14,9,7]).solve_dynamic_prog_scale_change(4) == 12)
+        assert(KnapSack(9,[5,5,4],[10,10,4]).solve_dynamic_prog_scale_change(5) == 10)
+        assert(KnapSack(9,[7,5,4],[14,9,7]).solve_dynamic_prog_scale_change(5) == 10)
 
 if __name__ == '__main__':
     unittest.main()
