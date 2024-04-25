@@ -34,9 +34,10 @@ class NashEquilibrium:
 
     @staticmethod
     def is_valid(A, B, solution : tuple, 
-                 verbose : bool = True) -> bool:
+                 verbose : bool = False) -> bool:
         '''
             Check if a solution is indeed a nash equilibrium for the matrices A and B
+            Issue: rounding float inconsistency
         '''
 
         x, y = solution
@@ -91,11 +92,11 @@ class NashEquilibrium:
                 self.xb, self.rb, self.sb, 
                 self.potential_gain_b, 
                 "b", self.max_regret_b, self.min_b, self.max_b)
-
+            
         self.max_gain_a = pulp.LpVariable(
-            f"max_gain_a", lowBound=0, upBound=self.max_a)
+            f"max_gain_a", lowBound=self.min_a, upBound=self.max_a)
         self.max_gain_b = pulp.LpVariable(
-            f"max_gain_b", lowBound=0, upBound=self.max_b)
+            f"max_gain_b", lowBound=self.min_b, upBound=self.max_b)
 
     def _compute_potential_gain(self):
         for i in range(self.m):
@@ -122,12 +123,12 @@ class NashEquilibrium:
 
     def _best_strategy_constraint(self):
         for i in range(self.m):
-            self.prob += self.sa[i] == (self.xa[i] != 0)
+            self.prob += self.xa[i] <= self.sa[i]
             self.prob += self.ra[i] <= (1 - self.sa[i]) * self.max_regret_a
 
         for j in range(self.n) :
-            self.prob += self.sb[j] == (self.xb[j] != 0)
-            self.prob += self.rb[j] <= (1 - self.sb[j])*self.max_regret_b
+            self.prob += self.xb[j] <= self.sb[j]
+            self.prob += self.rb[j] <= (1 - self.sb[j]) * self.max_regret_b
 
     def _make_constraints(self):
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
@@ -138,7 +139,7 @@ class NashEquilibrium:
         self._compute_risk()
         self._best_strategy_constraint()
 
-    def solve(self, verbose = True) -> np.array:
+    def solve(self, verbose = False) -> np.array:
         '''
             Returns a couple (x,y) of pure strategies that corresponds 
             to a Nash Equilibrium.
@@ -168,13 +169,6 @@ class NashEquilibrium:
             print(f"Objective: {pulp.value(self.prob.objective)}")
         
         self.solution = pulp.value(self.prob.objective)
-
-        # constraints = self.prob.constraints
-        # for name in constraints.keys():
-        #     value = constraints.get(name).value()
-        #     slack = constraints.get(name).slack
-        #     print(f'constraint {name} has value: {value:0.2e} and slack: {slack:0.2e}')
-
 
         if self.prob.status == pulp.LpSolutionInfeasible :
             return None

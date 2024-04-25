@@ -78,6 +78,17 @@ print(f"x: {solution_x}")
 print(f"y: {solution_y}")
 ```
 
+```{python}
+A = np.array([[3, 2], [1, 4]]) 
+B = np.array([[2, 1], [3, 2]])
+solution_x, solution_y = NashEquilibrium(A, B).solve()
+```
+```{python}
+#| echo: false
+print(f"x: {solution_x}")
+print(f"y: {solution_y}")
+```
+
 
 ## Modelization
 
@@ -90,12 +101,19 @@ We solve this problem using pulp with mixted linear programming (linear + discre
 | Strategies | $x_{a1}, \dots, x_{am}$ | $x_{b1}, \dots, x_{bn}$ | $[0,1]$ |
 | Strategies supports | $s_{a1}, \dots s_{am}$ | $s_{b1}, \dots, s_{bn}$ | $\{0, 1\}$ |
 | Regrets | $r_{a1}, \dots, r_{am}$ | $r_{b1}, \dots r_{bn}$ | $[0, M]$
-| Potential Gain | potential_gain_a | potential_gain_b | $[0, M]$
-| Max Gain (scalar) | max_gain_a | max_gain_b | $[0, M]$
+| Potential Gain | potential_gain_a | potential_gain_b | $[LG, HG]$
+| Max Gain (scalar) | max_gain_a | max_gain_b | $[LG, HG]$
 
 M represents respectively the max regret for $a$ and $b$. \
 $M_a := \max A_{ij} - \min A_{ij}$ \ 
-$M_b := \max B_{ij} - \min B_{ij}$
+$M_b := \max B_{ij} - \min B_{ij}$ \
+HG represents respectively the highest gain for $a$ and $b$. \
+$HG_a := \max A_{ij}$ \ 
+$HG_b := \max B_{ij}$ \
+LG represents respectively the lowest gain for $a$ and $b$. \
+$LG_a := \min A_{ij}$ \ 
+$LG_b := \min B_{ij}$
+
 
 ### Constraints
 #### [Eq Constraint] Stochastic vectors
