@@ -3,7 +3,12 @@ title: KnapSac
 ---
 
 ## Introduction
-In linear optimization
+In integer linear optimization, we consider a weight capacity for a bag, a list of weights of the items, and a list of values of the items.
+The goal of the Knapsack problem is to maximize the value of items placed in the bag without exceeding its weight capacity.
+
+More formally :
+    let $b \in \Bbb N, w_{1},...,w_{n} \in \Bbb N^n, v_{1},...,v_{n} \in \Bbb N^n$\
+    We want to determine $\max_i \{\sum_{i=1}^{n} v_{i}x_{i} | \sum_{i=1}^{n} w_{i}x_{i} < b, x_{i} \in {0,1}, i = 1,..,n\}$
 
 ## Algorithm
 
@@ -14,11 +19,11 @@ KnapSack(weight_capacity,array of items weight, array of items value)
 ```
 Then chose a solving algorithm between :\
 
-    * lower_bound (gives you a lower bound to the knapsack solution)\
-    * upper_bound (gives you an upper bound to the knapsack solution)\
-    * solve_branch_and_bound (gives you the exact solution to the knapsack)\
-    * solve_dynamic_prog (gives you the exact solution to the knapsack)\
-    * solve_dynamic_prog_scale_change (give you a lower_bound really close to the solution on large KnapSack)\
+* lower_bound (gives you a lower bound to the knapsack solution)
+* upper_bound (gives you an upper bound to the knapsack solution)
+* solve_branch_and_bound (gives you the exact solution to the knapsack)
+* solve_dynamic_prog (gives you the exact solution to the knapsack)
+* solve_dynamic_prog_scale_change (give you a lower_bound really close to the solution on large KnapSack)
 
 
 ### Examples
