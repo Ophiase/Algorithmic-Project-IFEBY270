@@ -15,8 +15,9 @@ class TestKnapSack(unittest.TestCase):
         method()
         end_time = time.time()
         return end_time - start_time
-        
-    def benchmark_time(self, knapsac, scale_heuristic):
+    
+    @staticmethod
+    def benchmark_time(knapsac, scale_heuristic):
         times = [
             ("Upper Bound", TestKnapSack.compute_time(knapsac.upper_bound)),
             ("Lower Bound", TestKnapSack.compute_time(knapsac.lower_bound)),
@@ -30,7 +31,8 @@ class TestKnapSack(unittest.TestCase):
         for name, time in sorted(times, key=lambda x: x[1]):
             print(f"\t{name}: {time:.6f} seconds")
 
-    def benchmark_precision(self, knapsac, scale_heuristic):
+    @staticmethod
+    def benchmark_precision(knapsac, scale_heuristic):
         pass
 
     def normalized_test(self,
@@ -53,8 +55,8 @@ class TestKnapSack(unittest.TestCase):
                                          result_heuristic)
 
         if benchmark :
-            self.benchmark_time(knapsac, scale_heuristic)
-            self.benchmark_precision(knapsac, scale_heuristic)
+            TestKnapSack.benchmark_time(knapsac, scale_heuristic)
+            TestKnapSack.benchmark_precision(knapsac, scale_heuristic)
 
         assert(succeed)
 

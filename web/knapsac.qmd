@@ -8,9 +8,53 @@ The goal of the Knapsack problem is to maximize the value of items placed in the
 
 More formally :
     let $b \in \Bbb N, w_{1},...,w_{n} \in \Bbb N^n, v_{1},...,v_{n} \in \Bbb N^n$\
-    We want to determine $\max_i \{\sum_{i=1}^{n} v_{i}x_{i} | \sum_{i=1}^{n} w_{i}x_{i} < b, x_{i} \in {0,1}, i = 1,..,n\}$
+    We want to determine $\max_i \{\sum_{i=1}^{n} v_{i}x_{i}\,|\,\sum_{i=1}^{n} w_{i}x_{i} < b, x_{i} \in \{0,1\}, i = 1,..,n\}$
 
 ## Algorithm
+### Upper bound :
+    sort the items of the bag by value/weight
+    upper_bound = 0
+    weight_available = weight capacity of the bag
+    for each element in the bag:
+        if element weight > weight available:
+            return upper_bound + element value * weight_available/element weight
+        else:
+            weight_available -= element weight
+            upper_bound += element value
+### Lower bound:
+    sort the items of the bag by value/weight
+    upper_bound = 0
+    weight_available = weight capacity of the bag
+    for each element in the bag:
+        if element weight < weight available:
+            weight_available -= element weight
+            upper_bound += element value
+    return lower_bound
+### branch and bound:
+    if there there are no items in the bag return 0
+    if upper_bound == lower_bound return upper_bound
+    if weight_capacity of the bag >= weight of the first item in the bag
+        value1 = value of the first item in the bag + branch and bound on the bag
+        (weight_capacity - weight of the first item, items values[1:], items weights[1:])
+        if value1 == upper_bound return upper_bound
+    value2 branch and bound on the bag wihtouth the first item
+    return the max between value1 and value2
+### dynamic prog:
+    S = [0,0]
+    for each element int the bag:
+        for each pair in S:
+            if(element weight + pair weight < weight capacity of the bag):
+                add element + pair to S
+        delete redundant elements
+    return the max of the values in S
+### dynamic prog with scale change:
+    S = [0,0]
+    for each element int the bag:
+        for each pair in S:
+            if(element weight + pair weight < weight capacity of the bag):
+                add element value/mu + pair value,element weight + pair weight to S
+        delete redundant elements
+    return the max of the values in S
 
 ## Code
 To find the solution to the KnapSack problem, create a KnapSack :
@@ -30,16 +74,17 @@ Then chose a solving algorithm between :\
 
 ```{python}
 #| echo: false
+from tests.knapsack import TestKnapSack
 from src.algorithm.knapsack.knapsack import KnapSack
 ```
 
 ```{python}
-A = KnapSack(3,[1,1,1,2],[3,2,1,1])
-lower_bound  = A.lower_bound()
-upper_bound  = A.upper_bound()
-solution1    = A.solve_branch_and_bound()
-solution2    = A.solve_dynamic_prog()
-lower_bound2 = A.solve_dynamic_prog_scale_change()
+knapsack = KnapSack(3,[1,1,1,2],[3,2,1,1])
+lower_bound  = knapsack.lower_bound()
+upper_bound  = knapsack.upper_bound()
+solution1    = knapsack.solve_branch_and_bound()
+solution2    = knapsack.solve_dynamic_prog()
+lower_bound2 = knapsack.solve_dynamic_prog_scale_change()
 ```
 ```{python}
 #| echo: false
@@ -51,16 +96,21 @@ print(f"lower bound 2: {lower_bound2}")
 ```
 You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\
 ```{python}
-B = A = KnapSack(3,[1,1,1,2],[8,7,3,1])
-solution = A.solve_dynamic_prog()
-lower_bound3 = A.solve_dynamic_prog_scale_change(2)
-lower_bound4 = A.solve_dynamic_prog_scale_change(4)
-lower_bound5 = A.solve_dynamic_prog_scale_change(8)
+knapsack = KnapSack(3,[1,1,1,2],[8,7,3,1])
+solution = knapsack.solve_dynamic_prog()
+lower_bound_2 = knapsack.solve_dynamic_prog_scale_change(2)
+lower_bound_4 = knapsack.solve_dynamic_prog_scale_change(4)
+lower_bound_8 = knapsack.solve_dynamic_prog_scale_change(8)
 ```
 ```{python}
 #| echo: false
 print(f"solution: {solution}")
-print(f"lower bound 3: {lower_bound3}")
-print(f"lower bound 4: {lower_bound4}")
-print(f"lower bound 5: {lower_bound5}")
+print(f"lower bound 2: {lower_bound_2}")
+print(f"lower bound 4: {lower_bound_4}")
+print(f"lower bound 8: {lower_bound_8}")
+```
+
+Test with benchmark
+```{python}
+TestKnapSack.benchmark_time(knapsack,None)
 ```

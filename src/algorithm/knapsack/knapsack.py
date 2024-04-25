@@ -29,7 +29,7 @@ class KnapSack:
 
     def _sort_by_ratio(self):
         """
-            Sort self.items_weights and self.items_values by ratio items_values/items_weights in descending order.
+            Sort self.items_weights and self.items_values by ratio items_values/items_weights in descending order by calling quicksort algorithm.
         """
         self._quickSort(0, len(self.items_values)-1)
 
@@ -98,7 +98,7 @@ class KnapSack:
         return KnapSack._branch_and_bound(self,max_iteration)[0]
 
     @staticmethod
-    def _sort_by_weight_and_value(array):
+    def _delete_redudant_elements(array):
         """
             Removes all unecessary values in the list for the dynamic programmtion solver of knapsack
         Args:
@@ -162,7 +162,7 @@ class KnapSack:
             for j in range(S_size):
                 if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
                     S.append([S[j][0] + self.items_values[i], S[j][1] + self.items_weights[i]])
-            KnapSack._sort_by_weight_and_value(S)
+            KnapSack._delete_redudant_elements(S)
 
         #returns the max value of S
         max = 0
@@ -185,7 +185,7 @@ class KnapSack:
             for j in range(S_size):
                 if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
                     S.append([S[j][0] + self.items_values[i]//mu, S[j][1] + self.items_weights[i]])
-            KnapSack._sort_by_weight_and_value(S)
+            KnapSack._delete_redudant_elements(S)
         #returns the max value of S
         max = 0
         for w in S:
