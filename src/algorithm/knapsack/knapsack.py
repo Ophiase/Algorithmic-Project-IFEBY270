@@ -1,10 +1,10 @@
 import sys
 
 class KnapSack:
-    def __init__(self, w, iw, iv):
-        self.weight_capacity = w
-        self.items_weights = iw
-        self.items_values = iv
+    def __init__(self, weight_capacity, items_weights, items_values):
+        self.weight_capacity = weight_capacity
+        self.items_weights = items_weights
+        self.items_values = items_values
 
     def _partition(self, low, high):
         pivot = self.items_values[high]/self.items_weights[high]
@@ -61,38 +61,38 @@ class KnapSack:
                 lower_bound += self.items_values[i]
         return lower_bound
 
-    def _branch_and_bound(self,n):
-        if n==0 or len(self.items_weights) == 0:
-            return 0, n
+    def _branch_and_bound(self,max_iteration):
+        if max_iteration==0 or len(self.items_weights) == 0:
+            return 0,max_iteration
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():#if both bounds are equals, then it's the value of the knapsack.
-            return upper_bound, n
+            return upper_bound,max_iteration
         value1 = 0
         if (self.weight_capacity >= self.items_weights[0]):
             with_first_item = KnapSack(self.weight_capacity - self.items_weights[0],self.items_weights[1:],self.items_values[1:])
-            value1, n = with_first_item._branch_and_bound(n-1)
+            value1,max_iteration = with_first_item._branch_and_bound(max_iteration-1)
             value1 += self.items_values[0]
             if(value1 == upper_bound):#if it's equal to the upper bound, then it's the value of the knapsack.
-                return value1, n
+                return value1,max_iteration
         withouth_first_item = KnapSack(self.weight_capacity,self.items_weights[1:],self.items_values[1:])
-        value2, n = withouth_first_item._branch_and_bound(n-1)
-        return max(value1,value2), n
+        value2,max_iteration = withouth_first_item._branch_and_bound(max_iteration-1)
+        return max(value1,value2),max_iteration
 
-    def solve_branch_and_bound(self, n = 50):
+    def solve_branch_and_bound(self, max_iteration = 50):
         """
             Solve the knapsack problem with a branch and bound approach.
         Args:
-            n (int): recursion depth
+            max_iteration (int): maximum amount of recursive calls.
         Returns:
             int: the maximum value of the knapsack
         """
-        if(n > sys.getrecursionlimit()):
-            sys.setrecursionlimit(max(n,10000))
+        if(max_iteration > sys.getrecursionlimit()):
+            sys.setrecursionlimit(max_iteration)
         self._sort_by_ratio()
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():
             return upper_bound
-        return KnapSack._branch_and_bound(self,n)[0]
+        return KnapSack._branch_and_bound(self,max_iteration)[0]
 
     @staticmethod
     def _sort_by_weight_and_value(array):
