@@ -9,7 +9,9 @@ class TestSubSet_Sum(unittest.TestCase):
 
     def test_solve_LLL(self):
         print()
-        print(SubSet([17,6,12,14,24], 42).create_basis())
+        set = SubSet([17,6,12,14,24], 42)
+        X = set.solve_LLL()
+        print(X)
         assert(True)
     
     def test_solve_dynamic_prog(self):

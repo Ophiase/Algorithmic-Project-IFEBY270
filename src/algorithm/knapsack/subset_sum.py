@@ -1,5 +1,7 @@
 import random
 import numpy as np
+from math import ceil, floor
+
 
 class SubSet:
     def __init__(self, set, target = None):
@@ -34,31 +36,112 @@ class SubSet:
         if (len(self.set) == 0 or self.target == 0):
             self.generate_random_low_density_subset_problem()
         B = np.identity(len(self.set) + 1)
-        B *= 2
-        B[len(self.set)] = 1
-        for row in B:
-            row[-1] = 1
-        B[len(self.set)] = self.set + [self.target]
+        all = self.set + [self.target]
+        root = np.sqrt(len(self.set))
+
+        B[len(self.set)] = 1/2
+        for i in range(len(all)):
+            B[i][len(self.set)] = all[i] * ceil(root / 2)
         return B
+    
+    def density(self):
+        """
+            Calculate the density of the subset problem
+        Returns:
+            float: the density
+        """
+        return len(self.set) / np.log2(len(self.target))
+    
+    def RED(self, basis, mu, k, l):
+        if np.abs(mu[k][l]) > 1/2:
+            r = floor(mu[k][l] + 1/2)
+            basis[k] = basis[k] - r * basis[l]
+            for j in range(l):
+                mu[k][j] = mu[k][j] - r * mu[l][j]
+            mu[k][l] = mu[k][l] - r
+        return basis, mu
                     
+    def LLL(self, basis):
+        """
+            The LLL algorithm
+        Args:
+            list: the basis
+        Returns:
+            list: the reduced basis
+        """
+        n = len(basis)
+        basis_c = np.copy(basis)
+        b_star = np.copy(basis_c)
+        B = np.array(n * [0])
+        mu = np.zeros((n,n))
+
+        # Step 1 & 2
+        B[0] = b_star[0] @ b_star[0]
+        for i in range(1,n):
+            b_star[i] = basis_c[i]
+            for j in range(i):
+                mu[i][j] = (basis_c[i] @ b_star[j]) / B[j]
+                b_star[i] = b_star[i] - mu[i][j] * b_star[j]
+                B[i] = b_star[i] @ b_star[i]
+
+        # Step 3
+        k = 1
+
+        while k < n:
+            # Step 4
+            basis_c, mu = self.RED(basis_c, mu, k, k - 1)
+
+            # Step 5
+            if (B[k] >= (0.75 - mu[k][k-1]*mu[k][k-1]) * B[k-1]):
+                for l in range(k-2,-1,-1):
+                    basis_c, mu = self.RED(basis_c, mu, k,l)
+                k += 1
+            else:
+                m = mu[k][k-1]
+                b = B[k] - m * m * B[k-1]
+                mu[k][k-1] = m * B[k-1] / b
+                B[k] = B[k-1] * B[k] / b
+                B[k-1] = b
+                basis_c[k], basis_c[k-1] = basis_c[k-1], basis_c[k]
+                if k > 1:
+                    for j in range (k-2):
+                        mu[k][j], mu[k-1][j] = mu[k-1][j], mu[k][j]
+                for i in range (k+1, n):
+                    t = mu[i][k]
+                    mu[i][k] = mu[i][k-1] - m * t
+                    mu[i][k-1] = t + mu[k][k-1] * mu[i][k]
+                k = max(k-1,1)
+
+        return basis_c
+
+        
+        return B
+
     def solve_LLL(self):
         """
             Solve the subset problem using the LLL algorithm
+        Returns:
+            int, list: the target (or the closest value to it), and the subset.
         """
+        B = self.LLL(self.create_basis())
+        X = np.zeros(len(self.set))
         n = len(self.set)
-        self.set.sort()
-        i = n - 1
-        while i >= 0 and self.set[i] > self.target:
-            i -= 1
-        if i < 0:
-            return self.target, []
-        subset = []
-        while i >= 0:
-            subset.append(self.set[i])
-            self.target -= self.set[i]
-            i -= 1
-        return self.target, subset
 
+        print(B)
+
+        for y in B:
+            if y[-1] == 0 and (y[i] == 1/2 or y[i] == -1/2 for i in range(len(y) - 1)):
+                for i in range(n):
+                    X[i] = y[i] + 1/2
+                if y @ X == self.target:
+                    return X
+                for i in range(n):
+                    X[i] = -y[i] + 1/2
+                if y @ X == self.target:
+                    return X
+
+        return None
+    
     def solve_dynamic_prog(self):
         """
             Solve the subset problem using dynamic programmation.
