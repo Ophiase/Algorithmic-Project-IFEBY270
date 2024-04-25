@@ -133,8 +133,8 @@ $\vec{r_a} =$ potential_gain_a $-$ max_gain_a \
 $\vec{r_b} =$ potential_gain_b $-$ max_gain_b
 
 #### [Constraint] Best strategy constraint
-$\forall i :\quad$ $s_{ai} = 1_{x_{ai} \neq 0}\qquad$ $r_{ai} \leq (1 - s_{ai}) \times M_a$ \
-$\forall j :\quad$ $s_{bj} = 1_{x_{bj} \neq 0}\qquad$ $r_{bj} \leq (1 - s_{bj}) \times M_b$
+$\forall i :\quad$ $x_{ai} \leq s_{ai} \qquad$ $r_{ai} \leq (1 - s_{ai}) \times M_a$ \
+$\forall j :\quad$ $x_{bj} \leq s_{bi} \qquad$ $r_{bj} \leq (1 - s_{bj}) \times M_b$
 
 ### Objective function :
 
