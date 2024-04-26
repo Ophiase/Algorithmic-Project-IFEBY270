@@ -1,10 +1,12 @@
-# Algorithmic-Project-IFEBY270
+# [Algorithmic-Project-IFEBY270](https://ophiase.github.io/Algorithmic-Project-IFEBY270/)
 
-An algorithmic project for a University course.
+An algorithmic project for a University course. 
 - Implemented
     - Simplexe
     - Nash Equilibrium
     - Knapsack + Reduction basis + Subset sum
+
+Visit : [Web Report](https://ophiase.github.io/Algorithmic-Project-IFEBY270/)
 
 # Execution
 
