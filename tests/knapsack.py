@@ -15,7 +15,7 @@ class TestKnapSack(unittest.TestCase):
         method()
         end_time = time.time()
         return end_time - start_time
-        
+
     def benchmark_time(self, knapsack, scale_heuristic = 2):
         times = [
             ("Upper Bound       ", TestKnapSack.compute_time(knapsack.upper_bound)),
@@ -50,21 +50,21 @@ class TestKnapSack(unittest.TestCase):
             print(f"\t{name} : {result}, {percentage_off}% of the solution , or {result-knapsack_solution} from the solution")
 
     def normalized_test(self,
-                         knapsack, upper_bound, lower_bound, result, 
-                         scale_heuristic, result_heuristic, 
+                         knapsack, upper_bound, lower_bound, result,
+                         scale_heuristic, result_heuristic,
                          verbose=False, benchmark=True):
         succeed = True
 
-        if upper_bound is not None: 
+        if upper_bound is not None:
             succeed &= truth_vs_computed("Upper Bound", knapsack.upper_bound(), upper_bound)
-        if lower_bound is not None: 
+        if lower_bound is not None:
             succeed &= truth_vs_computed("Lower Bound", knapsack.lower_bound(), lower_bound)
-        if result is not None: 
+        if result is not None:
             succeed &= truth_vs_computed("Branch and Bound result", knapsack.solve_branch_and_bound(), result)
             succeed &= truth_vs_computed("Dynamic result", knapsack.solve_dynamic_prog(), result)
-        
+
         if scale_heuristic and result_heuristic is not None:
-            succeed &= truth_vs_computed("Dynamic adaptative", 
+            succeed &= truth_vs_computed("Dynamic adaptative",
                                          knapsack.solve_dynamic_prog_scale_change(scale_heuristic),
                                          result_heuristic)
 
@@ -130,7 +130,7 @@ class TestKnapSack(unittest.TestCase):
             5,
             2, 2
         )
-    
+
     def test_007(self):
         self.normalized_test(
             KnapSack(9,[5,5,4],[10,10,4]),

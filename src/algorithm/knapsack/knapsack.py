@@ -11,7 +11,7 @@ class KnapSack:
         return f"KnapSack of weight capacity : {self.weight_capacity}, of items weights : {self.items_weights} and of items values : {self.items_values}"
 
     @staticmethod
-    def generate_random_knapsack(n = None):
+    def generate_random_knapsack(seed = 989389237839084, n = None):
         """
             Generate a random knapsack.
         Args:
@@ -19,6 +19,7 @@ class KnapSack:
         Returns:
             KnapSack: random knsapsack
         """
+        random.seed(seed)
         if(n == None):
             n = random.randrange(1,20)
         weight_capacity = random.randrange(1,n*n+1)
