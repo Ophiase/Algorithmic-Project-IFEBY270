@@ -1,4 +1,5 @@
 import sys
+import random
 
 class KnapSack:
     def __init__(self, weight_capacity, items_weights, items_values):
@@ -8,7 +9,38 @@ class KnapSack:
 
     def __str__(self):
         return f"KnapSack of weight capacity : {self.weight_capacity}, of items weights : {self.items_weights} and of items values : {self.items_values}"
-    
+
+    @staticmethod
+    def generate_random_knapsack(n = None):
+        """
+            Generate a random knapsack.
+        Args:
+            n (int): number of elements in the knapsack must
+        Returns:
+            KnapSack: random knsapsack
+        """
+        if(n == None):
+            n = random.randrange(1,20)
+        weight_capacity = random.randrange(1,n*n+1)
+        items_weights = [random.randrange(weight_capacity) for _ in range (n)]
+        items_values = [random.randrange(n*n+1) for _ in range (n)]
+        return KnapSack(weight_capacity, items_weights, items_values)
+
+    def _partition(self, low, high):
+        if self.items_weights[high] == 0 :
+            pivot = self.items_values[high]
+        else :
+            pivot = self.items_values[high]/self.items_weights[high]
+        i = low - 1
+        for j in range(low, high):
+            if self.items_weights[j] == 0 or self.items_values[j]/self.items_weights[j] > pivot:
+                i = i + 1
+                (self.items_values[i], self.items_values[j]) = (self.items_values[j], self.items_values[i])
+                (self.items_weights[i], self.items_weights[j]) = (self.items_weights[j], self.items_weights[i])
+        (self.items_values[i + 1], self.items_values[high]) = (self.items_values[high], self.items_values[i + 1])
+        (self.items_weights[i + 1], self.items_weights[high]) = (self.items_weights[high], self.items_weights[i + 1])
+        return i + 1
+
     def _partition(self, low, high):
         pivot = self.items_values[high]/self.items_weights[high]
         i = low - 1
@@ -87,9 +119,9 @@ class KnapSack:
         """
             Solve the knapsack problem with a branch and bound approach.
         Args:
+            return_max_iteration (bool): set it to True if you wish the function to return both the knapsack value, and the number of iteration remaining.If the number of iteration returned is 0, the result may not be the max value.
             max_iteration (int): maximum amount of recursive calls.
             max_recursion_depth (int): maximum depth of recursive calls (no need to modify it unless bag length > 1000).
-            return_max_iteration (bool): set it to True if you wish the function to return both the knapsack value, and the number of iteration remaining.If the number of iteration returned is 0, the result may not be the max value.
         Returns:
             int: the maximum value of the knapsack
         """

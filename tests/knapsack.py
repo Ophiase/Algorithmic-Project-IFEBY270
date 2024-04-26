@@ -48,7 +48,6 @@ class TestKnapSack(unittest.TestCase):
             else:
                 percentage_off = str(round(100*result/knapsack_solution))
             print(f"\t{name} : {result}, {percentage_off}% of the solution , or {result-knapsack_solution} from the solution")
-        pass
 
     def normalized_test(self,
                          knapsack, upper_bound, lower_bound, result, 
