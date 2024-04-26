@@ -257,7 +257,7 @@ We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_
 </ul>
 <section id="examples" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.3.1</span> Examples</h3>
-<div id="8385b29e" class="cell" data-execution_count="2">
+<div id="e5ac6abb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lower_bound  <span class="op">=</span> A.lower_bound()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>upper_bound  <span class="op">=</span> A.upper_bound()</span>
@@ -265,7 +265,7 @@ We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>solution2    <span class="op">=</span> A.solve_dynamic_prog()</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>lower_bound2 <span class="op">=</span> A.solve_dynamic_prog_scale_change()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8adb1dd7" class="cell" data-execution_count="3">
+<div id="8c19690a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>lower bound: 6
 upper bound: 6.0
@@ -276,14 +276,14 @@ lower bound 2: 4</code></pre>
 </div>
 <p>You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter<br>
 </p>
-<div id="99dc076c" class="cell" data-execution_count="4">
+<div id="54dcf5ae" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> A <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> A.solve_dynamic_prog()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lower_bound3 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">2</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>lower_bound4 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">4</span>)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lower_bound5 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6b6d472d" class="cell" data-execution_count="5">
+<div id="525ea037" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>solution: 18
 lower bound 3: 16

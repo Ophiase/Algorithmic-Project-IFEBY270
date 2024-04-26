@@ -22,18 +22,18 @@ make update_gamut
 
 # More Tests
 
-To add more tests using *unittest* to `src/algorithm/<problem>/<problem>.py`, modify `tests/<problem>.py`.
+To incorporate additional tests using unittest into `src/algorithm/<problem>/<problem>.py`, modify `tests/<problem>.py`.
 
-All methods with a name that begins with `test_` will be executed as tests.
+All methods with a name beginning with test_ will be executed as tests.
 
-Execute tests with :
+Execute tests with:
 ```bash
 python3 -m unittest tests.<test_name>
 ```
 
 ## Example
 
-To add another *Nash Equilibrium* example, edit `tests/nash_equilibrium.py`, and add the following method to TestNashEquilibrium's class :
+To include another Nash Equilibrium example, edit `tests/nash_equilibrium.py`, and add the following method to the TestNashEquilibrium class:
 
 ```python
 def test_example(self):
@@ -43,3 +43,7 @@ def test_example(self):
     )
 ```
 
+Execute the test with:
+```bash
+python3 -m unittest tests.nash_equilibrium
+```

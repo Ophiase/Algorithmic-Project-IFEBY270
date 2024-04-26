@@ -4,7 +4,17 @@
     "href": "index.html",
     "title": "Report - Algorithmic Project IFEBY270",
     "section": "",
-    "text": "An algorithmic project for a University course.\n\nImplemented\n\nSimplexe\nNash Equilibrium\nKnapsack + Reduction basis + Subset sum\n\n\n\n1 Execution\nExecute tests\n./run_tests # first method\nmake test_verbose # second method\npython3 -m unittest tests.&lt;test_name&gt; # for specific test\nUpdate Gamut tests\nmake update_gamut",
+    "text": "1 Execution\nExecute tests\nUpdate Gamut tests",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#example",
+    "href": "index.html#example",
+    "title": "Report - Algorithmic Project IFEBY270",
+    "section": "2.1 Example",
+    "text": "2.1 Example\nTo include another Nash Equilibrium example, edit tests/nash_equilibrium.py, and add the following method to the TestNashEquilibrium class:\ndef test_example(self):\n    self.check_equilibrium(\n        A = np.array([[3, 2], [1, 4]]), \n        B = np.array([[2, 1], [3, 2]])\n    )\nExecute the test with:\npython3 -m unittest tests.nash_equilibrium",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
