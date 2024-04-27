@@ -112,5 +112,8 @@ print(f"lower bound 8: {lower_bound_8}")
 
 Test with benchmark
 ```{python}
-TestKnapSack.benchmark_time(knapsack,None)
+TestKnapSack.benchmark_time(knapsack)
+```
+```{python}
+TestKnapSack.benchmark_precision(knapsack)
 ```

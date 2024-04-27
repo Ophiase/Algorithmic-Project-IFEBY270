@@ -21,7 +21,8 @@ class TestKnapSack(unittest.TestCase):
         end_time = time.time()
         return end_time - start_time
 
-    def benchmark_time(self, knapsack, scale_heuristic = 2):
+    @staticmethod
+    def benchmark_time(knapsack):
         times = [
             ("Upper Bound       ", TestKnapSack.compute_time(knapsack.upper_bound)),
             ("Lower Bound       ", TestKnapSack.compute_time(knapsack.lower_bound)),
@@ -34,11 +35,11 @@ class TestKnapSack(unittest.TestCase):
         for name, time in sorted(times, key=lambda x: x[1]):
             print(f"\t{name}: {time:.6f} seconds")
 
-    def benchmark_precision(self, knapsack, scale_heuristic):
-        solve_branch_and_bound = knapsack.solve_branch_and_bound(True)
+    @staticmethod
+    def benchmark_precision(knapsack):
         results = [
             ("Dynamic           ", knapsack.solve_dynamic_prog()),
-            ("Branch and Bound  ", solve_branch_and_bound[0]),
+            ("Branch and Bound  ", knapsack.solve_branch_and_bound()),
             ("Upper Bound       ", knapsack.upper_bound()),
             ("Lower Bound       ", knapsack.lower_bound()),
             ("Dynamic Adaptative", knapsack.solve_dynamic_prog_scale_change())
@@ -48,11 +49,11 @@ class TestKnapSack(unittest.TestCase):
         for name, result in results:
             if(knapsack_solution == 0):
                 percentage_off = str(100)
-                if(result != knapsack_solution):
+                if(result != 0):
                     percentage_off = "\u221e"#infinity symbole unicode
             else:
                 percentage_off = str(round(100*result/knapsack_solution))
-            print(f"\t{name} : {result}, {percentage_off}% of the solution , or {result-knapsack_solution} from the solution")
+            print(f"\t{name} : {result}, {percentage_off}% of the solution , or {result-knapsack_solution} away from the solution")
 
     def normalized_test(self,
                          knapsack, upper_bound, lower_bound, result,
@@ -74,8 +75,8 @@ class TestKnapSack(unittest.TestCase):
                                          result_heuristic)
 
         if benchmark :
-            self.benchmark_time(knapsack, scale_heuristic)
-            self.benchmark_precision(knapsack, scale_heuristic)
+            TestKnapSack.benchmark_time(knapsack)
+            TestKnapSack.benchmark_precision(knapsack)
 
         assert(succeed)
 
