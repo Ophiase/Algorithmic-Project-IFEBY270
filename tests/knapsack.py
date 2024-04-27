@@ -1,6 +1,6 @@
 import unittest
 import time
-from .utils import describe_test, truth_vs_computed
+from .utils import separator, describe_test, truth_vs_computed
 from src.algorithm.knapsack.knapsack import KnapSack
 
 
@@ -8,6 +8,11 @@ class TestKnapSack(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         describe_test("Knap Sack")
+
+    def run(self, test):
+        result = super().run(test)
+        print("\n" + "=" * 30 + "\n")
+        return result
 
     @staticmethod
     def compute_time(method):

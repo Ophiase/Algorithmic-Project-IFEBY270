@@ -1,5 +1,5 @@
 import unittest
-from .utils import describe_test
+from .utils import describe_test, separator
 from src.algorithm.knapsack.subset_sum import SubSet
 import numpy as np
 
@@ -7,6 +7,11 @@ class TestSubSet_Sum(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         describe_test("Subset Sum")
+
+    def run(self, test):
+        result = super().run(test)
+        print("\n" + "=" * 30 + "\n")
+        return result
 
     def test_GramSchmidt(self):
         print()

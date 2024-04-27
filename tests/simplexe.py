@@ -1,11 +1,16 @@
 import unittest
-from .utils import describe_test
+from .utils import describe_test, separator
 from src.algorithm.simplexe.simplexe import Simplexe
 
 class TestSimplexe(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         describe_test("Simplexe")
+
+    def run(self, test):
+        result = super().run(test)
+        print("\n" + "=" * 30 + "\n")
+        return result
 
     def test_1(self):
         print("\033[92mExpected Optimal Solution for Test 1: [8.0, 4.0, 0, 18.0, 0, 0]\033[0m")
