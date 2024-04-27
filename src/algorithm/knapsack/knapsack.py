@@ -1,4 +1,5 @@
 import sys
+import random
 
 class KnapSack:
     def __init__(self, weight_capacity, items_weights, items_values):
@@ -8,6 +9,22 @@ class KnapSack:
 
     def __str__(self):
         return f"KnapSack of weight capacity : {self.weight_capacity}, of items weights : {self.items_weights} and of items values : {self.items_values}"
+
+    @staticmethod
+    def generate_random_knapsack(n = None):
+        """
+            Generate a random knapsack.
+        Args:
+            n (int): number of elements in the knapsack be >= 1
+        Returns:
+            KnapSack: random knsapsack
+        """
+        if(n == None):
+            n = random.randrange(1,20)  
+        weight_capacity = random.randrange(1,(n+1)*(n+1))
+        items_weights = [random.randrange(weight_capacity) for _ in range (n)]
+        items_values = [random.randrange(n*n) for _ in range (n)]
+        return KnapSack(weight_capacity, items_weights, items_values)
     
     def _partition(self, low, high):
         pivot = self.items_values[high]/self.items_weights[high]
@@ -29,7 +46,7 @@ class KnapSack:
 
     def _sort_by_ratio(self):
         """
-            Sort self.items_weights and self.items_values by ratio items_values/items_weights in descending order.
+            Sort self.items_weights and self.items_values by ratio items_values/items_weights in descending order by calling quicksort algorithm.
         """
         self._quickSort(0, len(self.items_values)-1)
 
@@ -65,7 +82,7 @@ class KnapSack:
         return lower_bound
 
     def _branch_and_bound(self,max_iteration):
-        if max_iteration==0 or len(self.items_weights) == 0:
+        if max_iteration <= 0 or len(self.items_weights) == 0:
             return 0,max_iteration
         upper_bound = self.upper_bound()
         if upper_bound == self.lower_bound():#if both bounds are equals, then it's the value of the knapsack.
@@ -77,28 +94,30 @@ class KnapSack:
             value1 += self.items_values[0]
             if(value1 == upper_bound):#if it's equal to the upper bound, then it's the value of the knapsack.
                 return value1,max_iteration
+        if max_iteration <= 0:
+            return value1,max_iteration
         withouth_first_item = KnapSack(self.weight_capacity,self.items_weights[1:],self.items_values[1:])
         value2,max_iteration = withouth_first_item._branch_and_bound(max_iteration-1)
         return max(value1,value2),max_iteration
 
-    def solve_branch_and_bound(self, max_iteration = 50, max_recursion_depth = 1000):
+    def solve_branch_and_bound(self, max_iteration = 50, max_recursion_depth = 1000, return_max_iteration = False):
         """
             Solve the knapsack problem with a branch and bound approach.
         Args:
             max_iteration (int): maximum amount of recursive calls.
             max_recursion_depth (int): maximum depth of recursive calls (no need to modify it unless bag length > 1000).
+            return_max_iteration (bool): set it to True if you wish the function to return both the knapsack value, and the number of iteration remaining.If the number of iteration returned is 0, the result may not be the max value.
         Returns:
             int: the maximum value of the knapsack
         """
         sys.setrecursionlimit(max_recursion_depth)
         self._sort_by_ratio()
-        upper_bound = self.upper_bound()
-        if upper_bound == self.lower_bound():
-            return upper_bound
+        if(return_max_iteration):
+            return KnapSack._branch_and_bound(self,max_iteration)
         return KnapSack._branch_and_bound(self,max_iteration)[0]
 
     @staticmethod
-    def _sort_by_weight_and_value(array):
+    def _delete_redudant_elements(array):
         """
             Removes all unecessary values in the list for the dynamic programmtion solver of knapsack
         Args:
@@ -162,7 +181,7 @@ class KnapSack:
             for j in range(S_size):
                 if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
                     S.append([S[j][0] + self.items_values[i], S[j][1] + self.items_weights[i]])
-            KnapSack._sort_by_weight_and_value(S)
+            KnapSack._delete_redudant_elements(S)
 
         #returns the max value of S
         max = 0
@@ -185,7 +204,7 @@ class KnapSack:
             for j in range(S_size):
                 if(S[j][1] + self.items_weights[i] <= self.weight_capacity):
                     S.append([S[j][0] + self.items_values[i]//mu, S[j][1] + self.items_weights[i]])
-            KnapSack._sort_by_weight_and_value(S)
+            KnapSack._delete_redudant_elements(S)
         #returns the max value of S
         max = 0
         for w in S:

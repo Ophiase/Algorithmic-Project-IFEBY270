@@ -9,14 +9,17 @@ test_verbose:
 preview_web:
 	mkdir -p web/_output
 	cp -ru src web
+	cp -ru tests web
 	cd web; quarto preview
 
 render:
 	cp -ru src web
+	cp -ru tests web
 	cd web; quarto render
 
 render_show:
 	cp -ru src web
+	cp -ru tests web
 	cd web; quarto render
 	xdg-open web/_output/*.pdf
 
