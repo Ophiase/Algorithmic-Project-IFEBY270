@@ -1,18 +1,57 @@
 import unittest
 from .utils import describe_test
 from src.algorithm.knapsack.subset_sum import SubSet
+import numpy as np
 
 class TestSubSet_Sum(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         describe_test("Subset Sum")
 
-    def test_solve_LLL(self):
+    def test_GramSchmidt(self):
         print()
-        set = SubSet([17,6,102,14,1000,256,500,10,1,667 ], 2434)
-        X = set.solve_LLL()
-        #print(X)
-        assert(True)
+        set = SubSet([17,6,12,14,24], 23)
+        B_star = set.GramSchmidt([[10,10],[13,-3]])
+        assert np.array_equal(B_star, [[10, 10], [8, -8]])
+
+        B_star= set.GramSchmidt([[1,1],[2,1]])
+        assert np.array_equal(B_star, np.array([[1., 1.], [0.5, -0.5]]))
+    
+    def test_LLL(self):
+        print()
+        set = SubSet([17,6,12,14,24], 23)
+        basis = set.LLL([[1,1],[2,1]])
+        assert np.array_equal(basis, [[0., -1.], [1., 0.]])
+
+        basis = set.LLL([[10,10],[13,-3]])
+        assert np.array_equal(basis, [[10., 10.], [13., -3.]])
+
+    def test_solve_LLL(self):
+        solved_count = 0
+        unsolved_count = 0
+        total_density = 0
+
+        print()
+        for i in range(100):
+            subset_problem = SubSet.generate_random_low_density_subset_problem(2,0.2)
+            print(f"Problem {i+1} : {subset_problem.set} {subset_problem.target}")
+            X = subset_problem.solve_LLL()
+            density = subset_problem.density()
+            
+            if X is not None:
+                solved_count += 1
+                total_density += density
+            else:
+                unsolved_count += 1
+
+        avg_density = total_density / solved_count if solved_count > 0 else 0
+        
+        print("Benchmark Table:")
+        print(f"Number of problems solved: {solved_count}")
+        print(f"Number of problems unsolved: {unsolved_count}")
+        print(f"Average density: {avg_density}")
+
+
     
     def test_solve_dynamic_prog(self):
         assert(SubSet([17,6,12,14,24]).solve_dynamic_prog() == (23,[17,6]))

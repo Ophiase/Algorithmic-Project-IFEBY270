@@ -8,6 +8,11 @@ class Simplexe:
         self.table = self.init_table(canonical_form)
 
     def init_table(self, canonical_form):
+        """
+        Initialize the simplex table
+        Input:
+            canonical_form: list of lists
+        """
         var_nb = len(canonical_form[0])
         constr_nb = len(canonical_form)
         
@@ -31,6 +36,9 @@ class Simplexe:
         return self.table
     
     def is_optimal(self):
+        """
+        Check if the current solution is optimal
+        """
         return all(elem <= 0 for elem in self.table[0])
 
     def print_table(self):
@@ -39,6 +47,9 @@ class Simplexe:
             print(row_str)
 
     def get_basic_sol(self):
+        """
+        Get the basic solution from the simplex table
+        """
         if not self.is_optimal():
             basic_sol = [0 for _ in range(len(self.table[0]) - 1)]
             b = [self.canonical_form[i][-1] for i in range(1, len(self.canonical_form))]
@@ -52,6 +63,9 @@ class Simplexe:
             return(basic_sol)
 
     def pivot(self):
+        """
+        Select the incoming and outgoing variables
+        """
         table_np = np.array(self.table)
         
         for e, coefficient in enumerate(table_np[0, :len(table_np[0]) - 1 - len(self.vars)]):
@@ -67,6 +81,9 @@ class Simplexe:
         return 1 if all(elem <= 0 for elem in table_np[0]) else -1
     
     def update(self):
+        """
+        Update the simplex table to the next iteration
+        """
         pivot_result = self.pivot()
         if pivot_result == -1:
             return -1
@@ -98,47 +115,10 @@ class Simplexe:
             print("Basic solution:", end=' ')
             print(self.get_basic_sol())
 
-
-    def pivot(self):
-        table_np = np.array(self.table)
-
-        for e, coefficient in enumerate(table_np[0, :len(table_np[0]) - 1 - len(self.vars)]):
-            if coefficient > 0:
-                non_zero_entries = table_np[1:, e] > 0
-                if np.any(non_zero_entries):
-                    ratios = table_np[1:, -1] / np.where(table_np[1:, e] != 0, table_np[1:, e], 1e-100)
-                    min_ratio_index = np.argmin(ratios) + 1
-                    return (e, min_ratio_index)
-                else:
-                    return -1
-
-        return 1 if all(elem <= 0 for elem in table_np[0]) else -1
-
-    def update(self):
-        pivot_result = self.pivot()
-        if pivot_result == -1:
-            return -1
-        elif pivot_result == 1:
-            return 1
-        incoming, outgoing = pivot_result
-        self.vars[outgoing - 1] = incoming
-
-        pivot_value = float(self.table[outgoing][incoming])
-        table_copy = [row.copy() for row in self.table]
-
-        for i in range(1, len(table_copy)):
-            if i != outgoing:
-                factor = self.table[i][incoming] / pivot_value
-                table_copy[i] = [x - self.table[outgoing][j] * factor for j, x in enumerate(table_copy[i])]
-
-        table_copy[outgoing] = [x / pivot_value for x in table_copy[outgoing]]
-
-        pivot_row_multiplier = [self.table[0][incoming] * x for x in table_copy[outgoing]]
-        table_copy[0] = [x - y for x, y in zip(self.table[0], pivot_row_multiplier)]
-
-        self.table = table_copy
-
     def execute_simplexe(self):
+        """
+        Execute the simplex algorithm
+        """
         while not self.is_optimal():
             res = self.update()
             if res == -1:
