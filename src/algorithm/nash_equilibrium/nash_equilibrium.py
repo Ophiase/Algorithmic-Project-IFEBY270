@@ -18,6 +18,10 @@ class NashEquilibrium:
         self.m = A.shape[0]
         self.n = A.shape[1]
 
+        self.max_a = np.max(A)
+        self.max_b = np.max(B)
+        self.min_a = np.min(A)
+        self.min_b = np.min(B)
         self.max_regret_a = np.max(A) - np.min(A)
         self.max_regret_b = np.max(B) - np.min(B)
 
@@ -33,12 +37,13 @@ class NashEquilibrium:
                  verbose : bool = False) -> bool:
         '''
             Check if a solution is indeed a nash equilibrium for the matrices A and B
+            Issue: rounding float inconsistency
         '''
 
         x, y = solution
 
-        current_gain_a = np.dot(np.dot(x, A), y)
-        current_gain_b = np.dot(np.dot(x, B), y) 
+        current_gain_a = (x @ A) @ y
+        current_gain_b = ((x @ B) @ y) 
 
         max_gain_a = np.max(np.dot(A, y))
         max_gain_b = np.max(np.dot(x, B))
@@ -49,10 +54,10 @@ class NashEquilibrium:
         if verbose:
             if not is_a_valid :
                 print("x is not valid")
-                print(f"Wanted gain: {max_gain_a}")
+                print(f"Current gain {current_gain_a} \t Wanted gain: {max_gain_a}")
             if not is_b_valid :
                 print("y is not valid")
-                print(f"Wanted gain: {max_gain_b}")
+                print(f"Current gain {current_gain_b} \t Wanted gain: {max_gain_b}")
 
         return is_a_valid and is_b_valid
     
@@ -61,16 +66,17 @@ class NashEquilibrium:
         raise NotImplemented()
 
     @staticmethod
-    def _init_xrs_variables(i, x, r, s, potential_gain, letter, r_bound):
+    def _init_xrs_variables(
+        i, x, r, s, potential_gain, letter, risk_bound, gain_low_bound, gain_up_bound):
         x.append(pulp.LpVariable(f"x{letter}_{i}", lowBound=0, upBound=1)) # [0, 1]
-        r.append(pulp.LpVariable(f"r{letter}_{i}", lowBound=0, upBound=r_bound)) # >= 0
+        r.append(pulp.LpVariable(f"r{letter}_{i}", lowBound=0, upBound=risk_bound)) # >= 0
         s.append(pulp.LpVariable(f"s{letter}_{i}", cat=pulp.LpBinary)) # {0, 1}
         potential_gain.append(
             pulp.LpVariable(
-                f"potential_gain_{letter}_{i}", lowBound=0, upBound=r_bound)) # >= 0
+                f"potential_gain_{letter}_{i}", lowBound=gain_low_bound, upBound=gain_up_bound))
     
     def _init_variables(self):
-        self.xa, self.xb = [], [] # strategies (delta_i)
+        self.xa, self.xb = [], [] # strategies
         self.ra, self.rb = [], [] # regrets
         self.sa, self.sb = [], [] # supports
 
@@ -80,17 +86,17 @@ class NashEquilibrium:
             NashEquilibrium._init_xrs_variables(i, 
                 self.xa, self.ra, self.sa,
                 self.potential_gain_a,
-                "a", self.max_regret_a)
+                "a", self.max_regret_a, self.min_a, self.max_a)
         for j in range(self.n):
             NashEquilibrium._init_xrs_variables(j, 
                 self.xb, self.rb, self.sb, 
                 self.potential_gain_b, 
-                "b", self.max_regret_b)
-
+                "b", self.max_regret_b, self.min_b, self.max_b)
+            
         self.max_gain_a = pulp.LpVariable(
-            f"max_gain_a", lowBound=0, upBound=self.max_regret_a)
+            f"max_gain_a", lowBound=self.min_a, upBound=self.max_a)
         self.max_gain_b = pulp.LpVariable(
-            f"max_gain_b", lowBound=0, upBound=self.max_regret_b)
+            f"max_gain_b", lowBound=self.min_b, upBound=self.max_b)
 
     def _compute_potential_gain(self):
         for i in range(self.m):
@@ -113,17 +119,16 @@ class NashEquilibrium:
                 (self.max_gain_a - self.potential_gain_a[i])
         for j in range(self.n) :
             self.prob += self.rb[j] == \
-                (self.max_gain_b - self.potential_gain_b[i])
+                (self.max_gain_b - self.potential_gain_b[j])
 
     def _best_strategy_constraint(self):
-
         for i in range(self.m):
-            self.prob += self.sa[i] == (self.xa[i] != 0)
+            self.prob += self.xa[i] <= self.sa[i]
             self.prob += self.ra[i] <= (1 - self.sa[i]) * self.max_regret_a
 
         for j in range(self.n) :
-            self.prob += self.sb[j] == (self.xb[j] != 0)
-            self.prob += self.rb[j] <= (1 - self.sb[j])*self.max_regret_b
+            self.prob += self.xb[j] <= self.sb[j]
+            self.prob += self.rb[j] <= (1 - self.sb[j]) * self.max_regret_b
 
     def _make_constraints(self):
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
@@ -164,6 +169,9 @@ class NashEquilibrium:
             print(f"Objective: {pulp.value(self.prob.objective)}")
         
         self.solution = pulp.value(self.prob.objective)
+
+        if self.prob.status == pulp.LpSolutionInfeasible :
+            return None
 
         # EXTRACT STRATEGIE
         return (
