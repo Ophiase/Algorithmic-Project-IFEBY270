@@ -4,3 +4,4 @@
 *.tex
 *_files
 src
+tests

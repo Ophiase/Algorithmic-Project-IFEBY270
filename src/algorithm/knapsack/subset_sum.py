@@ -1,13 +1,6 @@
 import random
 import numpy as np
-from math import ceil, floor
-
-def print_matrix(matrix):
-    for row in matrix:
-        print("|", end="")
-        for value in row:
-            print("{:10.2f}".format(value), end="")
-        print(" |")
+from fractions import Fraction
 
 class SubSet:
     def __init__(self, set, target = None):
@@ -19,7 +12,7 @@ class SubSet:
             self.target = target
 
     @staticmethod
-    def generate_random_low_density_subset_problem(n = None):
+    def generate_random_low_density_subset_problem(n = None, density = 0.5):
         """
             Generate a random case of the subset problem with low density.
         Args:
@@ -29,8 +22,12 @@ class SubSet:
         """
         if(n == None):
             n = random.randrange(20)
-        target = random.randrange(1<<n)
-        set = [random.randrange(min(1<<n,target)) for _ in range (n)]
+        sup = n/density
+        set = [random.randrange(1 << round(sup) - 1, 1 << round(sup)) for _ in range (n)]
+
+        length = random.randint(1, n)
+        l = [random.randint(0, n-1) for _ in range(length)]
+        target = np.sum([set[i] for i in l])
         return SubSet(set,target)
     
     def create_basis(self):
@@ -41,13 +38,13 @@ class SubSet:
         """
         if (len(self.set) == 0 or self.target == 0):
             self.generate_random_low_density_subset_problem()
-        B = np.identity(len(self.set) + 1)
+        B = np.identity(len(self.set) + 1) * 2
         all = self.set + [self.target]
         root = np.sqrt(len(self.set))
 
-        B[len(self.set)] = 1/2
+        B[len(self.set)] = 1
         for i in range(len(all)):
-            B[i][len(self.set)] = all[i] * ceil(root / 2)
+            B[i][len(self.set)] = all[i]
 
         return B
     
@@ -59,15 +56,41 @@ class SubSet:
         """
         return len(self.set) / np.log2(self.target)
     
-    def RED(self, basis, mu, k, l):
-        if np.abs(mu[k][l]) > 1/2:
-            r = floor(mu[k][l] + 1/2)
-            basis[k] = basis[k] - r * basis[l]
-            for j in range(l):
-                mu[k][j] = mu[k][j] - r * mu[l][j]
-            mu[k][l] = mu[k][l] - r
-        return basis, mu
-                    
+    @staticmethod
+    def GramSchmidt(basis):
+        """
+            The Gram-Schmidt algorithm
+        Args:
+            list: the basis
+        Returns:
+            list: the orthogonalized basis
+        """
+        u = []
+        for vi in basis:
+            ui = np.array(vi)
+            for uj in u:
+                ui = ui - (np.dot(vi, uj) / np.dot(uj, uj)) * uj
+            if any(ui):
+                u.append(ui)
+        return u
+    
+    def Normalize(self, basis, ortho, mu_kj, k, j):
+        """
+            Normalize the basis
+        Args:
+            list: the basis
+            list: the orthogonalized basis
+            float: the value of the element mu_kj
+            int: the index k
+            int: the index j
+        Returns:
+            list, list: the normalized basis and the orthogonalized basis
+        """
+        if abs(mu_kj) > 0.5:
+            basis[k] = basis[k] - basis[j] * round(mu_kj)
+            ortho = self.GramSchmidt(basis)
+        return basis, ortho
+    
     def LLL(self, basis):
         """
             The LLL algorithm
@@ -77,51 +100,29 @@ class SubSet:
             list: the reduced basis
         """
         n = len(basis)
-        basis_c = np.copy(basis)
-        b_star = np.copy(basis_c)
-        B = np.array(n * [0])
-        mu = np.zeros((n,n))
+        basis = np.array(basis, dtype=float)
+        ortho = self.GramSchmidt(basis)
+        delta = 0.75
 
-        # Step 1 & 2
-        B[0] = b_star[0] @ b_star[0]
-        for i in range(1,n):
-            b_star[i] = basis_c[i]
-            for j in range(i):
-                mu[i][j] = (basis_c[i] @ b_star[j]) / B[j]
-                b_star[i] = b_star[i] - mu[i][j] * b_star[j]
-                B[i] = (b_star[i] @ b_star[i])
-
-        # Step 3
+        def mu(i, j) -> Fraction:
+            return np.dot(ortho[j], basis[i]) / np.dot(ortho[j], ortho[j])
+        
         k = 1
-
-        while (1):
-            # Step 4
-            basis_c, mu = self.RED(basis_c, mu, k, k - 1)
-
-            # Step 5
-            if (B[k] >= (3/4 - mu[k][k-1]*mu[k][k-1]) * B[k-1]):
-                for l in range(k-2,-1,-1):
-                    basis_c, mu = self.RED(basis_c, mu, k, l)
+        while k < n:
+            for j in range(k - 1, -1, -1):
+                mu_kj = mu(k,j)
+                basis, ortho = self.Normalize(basis, ortho, mu_kj, k, j)
+            if np.dot(ortho[k], ortho[k]) >= (delta - mu(k, k - 1) ** 2) * np.dot(ortho[k - 1], ortho[k - 1]):
                 k += 1
-                if k >= n:
-                    return basis_c
             else:
-                m = mu[k][k-1]
-                b = B[k] + m * m * B[k-1]
-                mu[k][k-1] = m * B[k-1] / b
-                B[k] = B[k-1] * B[k] / b
-                B[k-1] = b
-                basis_c[k], basis_c[k-1] = basis_c[k-1], basis_c[k]
-                if k > 1:
-                    for j in range (k-2):
-                        mu[k][j], mu[k-1][j] = mu[k-1][j], mu[k][j]
-                for i in range (k+1, n):
-                    t = mu[i][k]
-                    mu[i][k] = mu[i][k-1] - m * t
-                    mu[i][k-1] = t + mu[k][k-1] * mu[i][k]
-                k = max(k-1,1)
+                temp = np.copy(basis[k])
+                basis[k] = np.copy(basis[k - 1])
+                basis[k - 1] = np.copy(temp)
+                ortho = self.GramSchmidt(basis)
+                k = max(k - 1, 1)
+        
+        return basis
 
-        return basis_c
 
     def solve_LLL(self):
         """
@@ -130,21 +131,14 @@ class SubSet:
             int, list: the target (or the closest value to it), and the subset.
         """
         B = self.LLL(self.create_basis())
-        X = np.zeros(len(self.set)+1)
-        n = len(self.set)
-
-        print_matrix(B)
 
         for y in B:
-            if y[-1] == 0 and (y[i] == 1/2 or y[i] == -1/2 for i in range(len(y) - 1)):
-                for i in range(n):
-                    X[i] = y[i] + 1/2
-                if y @ X == self.target:
+            if y[-1] == 0. and all(y[i] == 1 or y[i] == -1 for i in range(len(y) - 1)):
+                X = [1 if val == -1 else 0 for val in y[:-1]]
+                res = np.dot(self.set, X)
+                if res == self.target:
                     return X
-                for i in range(n):
-                    X[i] = -y[i] + 1/2
-                if y @ X == self.target:
-                    return X
+                break
 
         return None
     
