@@ -58,6 +58,13 @@ class SubSet:
     
     @staticmethod
     def GramSchmidt(basis):
+        """
+            The Gram-Schmidt algorithm
+        Args:
+            list: the basis
+        Returns:
+            list: the orthogonalized basis
+        """
         u = []
         for vi in basis:
             ui = np.array(vi)
@@ -68,6 +75,17 @@ class SubSet:
         return u
     
     def Normalize(self, basis, ortho, mu_kj, k, j):
+        """
+            Normalize the basis
+        Args:
+            list: the basis
+            list: the orthogonalized basis
+            float: the value of the element mu_kj
+            int: the index k
+            int: the index j
+        Returns:
+            list, list: the normalized basis and the orthogonalized basis
+        """
         if abs(mu_kj) > 0.5:
             basis[k] = basis[k] - basis[j] * round(mu_kj)
             ortho = self.GramSchmidt(basis)
