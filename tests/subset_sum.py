@@ -27,14 +27,15 @@ class TestSubSet_Sum(unittest.TestCase):
         assert np.array_equal(basis, [[10., 10.], [13., -3.]])
 
     def test_solve_LLL(self):
+        print()
         solved_count = 0
         unsolved_count = 0
         total_density = 0
 
         print()
         for i in range(100):
-            subset_problem = SubSet.generate_random_low_density_subset_problem(2,0.2)
-            print(f"Problem {i+1} : {subset_problem.set} {subset_problem.target}")
+            subset_problem = SubSet.generate_random_low_density_subset_problem(5,0.2)
+            #print(f"Problem {i+1} : {subset_problem.set} {subset_problem.target}")
             X = subset_problem.solve_LLL()
             density = subset_problem.density()
             
