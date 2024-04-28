@@ -43,6 +43,61 @@ Alternative constructors :
 
 ### Examples
 
+#### LLL algorithm
+
+```{python}
+#| echo: false
+from tests.subset_sum import TestSubSet_Sum
+from src.algorithm.knapsack.subset_sum import SubSet
+import numpy as np
+```
+
+To perform a single, precise test:\
+```{python}
+set = SubSet([23603, 6105, 5851, 19660, 8398, 8545, 14712], 37760)
+X = set.solve_LLL()
+assert np.dot(X, [23603, 6105, 5851, 19660, 8398, 8545, 14712]) == 37760
+```
+
+```{python}
+#| echo: false
+print(f"X = {X}")
+```
+
+To parameterize set length and density, and study the algorithm's performance:\
+
+```{python}
+solved_count = 0
+unsolved_count = 0
+total_density = 0
+n = 4
+
+for i in range(1000):
+    subset_problem = SubSet.generate_random_low_density_subset_problem(n,density=0.2)
+    X = subset_problem.solve_LLL()
+    density = subset_problem.density()
+    
+    if X is not None:
+        solved_count += 1
+        total_density += density
+    else:
+        unsolved_count += 1
+
+avg_density = total_density / solved_count if solved_count > 0 else 0
+```
+
+```{python}
+#| echo: false
+print("Benchmark Table: n =",n)
+print(f"Number of problems solved: {solved_count}")
+print(f"Number of problems unsolved: {unsolved_count}")
+print(f"Average density: {avg_density}")
+```
+
+The test above can be modified in the *tests/subset_sum.py* file.
+
+#### Dynamic programming
+
 ```{python}
 #| echo: false
 from tests.subset_sum import TestSubSet_Sum
@@ -52,11 +107,9 @@ from src.algorithm.knapsack.subset_sum import SubSet
 problem = SubSet([23603, 6105, 5851, 19660, 8398, 8545, 14712], 37760)
 
 dynamic_solution = problem.solve_dynamic_prog()
-LLL_solution = problem.solve_LLL()
 ```
 ```{python}
 #| echo: false
 
 print(f"Dynamic solution : {dynamic_solution}")
-print(f"LLL solution : {LLL_solution}")
 ```
