@@ -68,7 +68,7 @@ class TestSubSet_Sum(unittest.TestCase):
 
         avg_density = total_density / solved_count if solved_count > 0 else 0
         
-        print("Benchmark Table: n=",n)
+        print("Benchmark Table: n =",n)
         print(f"Number of problems solved: {solved_count}")
         print(f"Number of problems unsolved: {unsolved_count}")
         print(f"Average density: {avg_density}")
