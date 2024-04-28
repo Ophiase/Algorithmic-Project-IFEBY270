@@ -182,10 +182,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#execution" id="toc-execution" class="nav-link active" data-scroll-target="#execution"><span class="header-section-number">1</span> Execution</a></li>
-  <li><a href="#more-tests" id="toc-more-tests" class="nav-link" data-scroll-target="#more-tests"><span class="header-section-number">2</span> More Tests</a>
+  <li><a href="#execution" id="toc-execution" class="nav-link active" data-scroll-target="#execution"><span class="header-section-number">0.1</span> Execution</a></li>
+  <li><a href="#more-tests" id="toc-more-tests" class="nav-link" data-scroll-target="#more-tests"><span class="header-section-number">0.2</span> More Tests</a>
   <ul class="collapse">
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">2.1</span> Example</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">0.2.1</span> Example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -221,8 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Knapsack + Reduction basis + Subset sum</li>
 </ul></li>
 </ul>
-<section id="execution" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Execution</h1>
+<section id="execution" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="execution"><span class="header-section-number">0.1</span> Execution</h2>
 <p>Execute tests</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./run_tests</span> <span class="co"># first method</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> test_verbose <span class="co"># second method</span></span>
@@ -230,14 +230,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Update Gamut tests</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> update_gamut</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="more-tests" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> More Tests</h1>
+<section id="more-tests" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="more-tests"><span class="header-section-number">0.2</span> More Tests</h2>
 <p>To incorporate additional tests using unittest into <code>src/algorithm/&lt;problem&gt;/&lt;problem&gt;.py</code>, modify <code>tests/&lt;problem&gt;.py</code>.</p>
 <p>All methods with a name beginning with test_ will be executed as tests.</p>
 <p>Execute tests with:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> unittest tests.<span class="op">&lt;</span>test_name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="example" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="example"><span class="header-section-number">2.1</span> Example</h2>
+<section id="example" class="level3" data-number="0.2.1">
+<h3 data-number="0.2.1" class="anchored" data-anchor-id="example"><span class="header-section-number">0.2.1</span> Example</h3>
 <p>To include another Nash Equilibrium example, edit <code>tests/nash_equilibrium.py</code>, and add the following method to the TestNashEquilibrium class:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_example(<span class="va">self</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.check_equilibrium(</span>

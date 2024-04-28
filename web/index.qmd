@@ -9,7 +9,7 @@ An algorithmic project for a University course.
     - Nash Equilibrium
     - Knapsack + Reduction basis + Subset sum
 
-# Execution
+## Execution
 
 Execute tests
 ```bash
@@ -23,7 +23,7 @@ Update Gamut tests
 make update_gamut
 ```
 
-# More Tests
+## More Tests
 
 To incorporate additional tests using unittest into `src/algorithm/<problem>/<problem>.py`, modify `tests/<problem>.py`.
 
@@ -34,7 +34,7 @@ Execute tests with:
 python3 -m unittest tests.<test_name>
 ```
 
-## Example
+### Example
 
 To include another Nash Equilibrium example, edit `tests/nash_equilibrium.py`, and add the following method to the TestNashEquilibrium class:
 

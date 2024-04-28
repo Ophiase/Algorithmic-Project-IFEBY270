@@ -286,19 +286,19 @@ window.Quarto = {
 <h4 data-number="5.2.1.1" class="anchored" data-anchor-id="lll-algorithm"><span class="header-section-number">5.2.1.1</span> LLL algorithm</h4>
 <p>To perform a single, precise test:<br>
 </p>
-<div id="31c49863" class="cell" data-execution_count="2">
+<div id="128cb764" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="op">=</span> SubSet([<span class="dv">23603</span>, <span class="dv">6105</span>, <span class="dv">5851</span>, <span class="dv">19660</span>, <span class="dv">8398</span>, <span class="dv">8545</span>, <span class="dv">14712</span>], <span class="dv">37760</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="bu">set</span>.solve_LLL()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.dot(X, [<span class="dv">23603</span>, <span class="dv">6105</span>, <span class="dv">5851</span>, <span class="dv">19660</span>, <span class="dv">8398</span>, <span class="dv">8545</span>, <span class="dv">14712</span>]) <span class="op">==</span> <span class="dv">37760</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e55bcc59" class="cell" data-execution_count="3">
+<div id="7900b23e" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>X = [0, 1, 0, 0, 1, 1, 1]</code></pre>
 </div>
 </div>
 <p>To parameterize set length and density, and study the algorithm’s performance:<br>
 </p>
-<div id="46121e6e" class="cell" data-execution_count="4">
+<div id="2995805f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>solved_count <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>unsolved_count <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>total_density <span class="op">=</span> <span class="dv">0</span></span>
@@ -317,24 +317,24 @@ window.Quarto = {
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>avg_density <span class="op">=</span> total_density <span class="op">/</span> solved_count <span class="cf">if</span> solved_count <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="274d4d0b" class="cell" data-execution_count="5">
+<div id="0b155ff0" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>Benchmark Table: n = 4
-Number of problems solved: 580
-Number of problems unsolved: 420
-Average density: 0.1977007250153433</code></pre>
+Number of problems solved: 551
+Number of problems unsolved: 449
+Average density: 0.1975495982211796</code></pre>
 </div>
 </div>
 <p>The test above can be modified in the <em>tests/subset_sum.py</em> file.</p>
 </section>
 <section id="dynamic-programming" class="level4" data-number="5.2.1.2">
 <h4 data-number="5.2.1.2" class="anchored" data-anchor-id="dynamic-programming"><span class="header-section-number">5.2.1.2</span> Dynamic programming</h4>
-<div id="8fb91efe" class="cell" data-execution_count="7">
+<div id="113a588a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> SubSet([<span class="dv">23603</span>, <span class="dv">6105</span>, <span class="dv">5851</span>, <span class="dv">19660</span>, <span class="dv">8398</span>, <span class="dv">8545</span>, <span class="dv">14712</span>], <span class="dv">37760</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dynamic_solution <span class="op">=</span> problem.solve_dynamic_prog()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c4629ec4" class="cell" data-execution_count="8">
+<div id="35ac29b8" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Dynamic solution : (37760, [6105, 8398, 8545, 14712])</code></pre>
 </div>
