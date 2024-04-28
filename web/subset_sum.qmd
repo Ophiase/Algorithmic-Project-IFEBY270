@@ -31,7 +31,7 @@ LLL_solution = problem.solve_LLL()
 * Dynamic
     * `solve_dynamic_prog` returns a couple (target, chosen elemements), as if there is no solution to the problem, it will give the closest to the target.\
 * LLL
-    * solve_LLL returns a vector corresponding to the chosen elements
+    * `solve_LLL` returns a vector corresponding to the chosen elements
 
 Alternative constructors :
 
