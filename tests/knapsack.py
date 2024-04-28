@@ -22,13 +22,15 @@ class TestKnapSack(unittest.TestCase):
         return end_time - start_time
 
     @staticmethod
-    def benchmark_time(knapsack):
+    def benchmark_time(knapsack, scale_heuristic=2):
         times = [
             ("Upper Bound       ", TestKnapSack.compute_time(knapsack.upper_bound)),
             ("Lower Bound       ", TestKnapSack.compute_time(knapsack.lower_bound)),
             ("Branch and Bound  ", TestKnapSack.compute_time(knapsack.solve_branch_and_bound)),
             ("Dynamic           ", TestKnapSack.compute_time(knapsack.solve_dynamic_prog)),
-            ("Dynamic Adaptative", TestKnapSack.compute_time(knapsack.solve_dynamic_prog_scale_change))
+            ("Dynamic Adaptative", TestKnapSack.compute_time(
+                lambda : knapsack.solve_dynamic_prog_scale_change(scale_heuristic))
+            )
         ]
 
         print("Times")
@@ -36,13 +38,13 @@ class TestKnapSack(unittest.TestCase):
             print(f"\t{name}: {time:.6f} seconds")
 
     @staticmethod
-    def benchmark_precision(knapsack):
+    def benchmark_precision(knapsack, scale_heuristic=2):
         results = [
             ("Dynamic           ", knapsack.solve_dynamic_prog()),
             ("Branch and Bound  ", knapsack.solve_branch_and_bound()),
             ("Upper Bound       ", knapsack.upper_bound()),
             ("Lower Bound       ", knapsack.lower_bound()),
-            ("Dynamic Adaptative", knapsack.solve_dynamic_prog_scale_change())
+            ("Dynamic Adaptative", knapsack.solve_dynamic_prog_scale_change(scale_heuristic))
         ]
         print("Results")
         knapsack_solution = results[0][1]
@@ -75,8 +77,8 @@ class TestKnapSack(unittest.TestCase):
                                          result_heuristic)
 
         if benchmark :
-            TestKnapSack.benchmark_time(knapsack)
-            TestKnapSack.benchmark_precision(knapsack)
+            TestKnapSack.benchmark_time(knapsack, scale_heuristic)
+            TestKnapSack.benchmark_precision(knapsack, scale_heuristic)
 
         assert(succeed)
 

@@ -3,7 +3,7 @@ title: KnapSac
 ---
 
 ## Introduction
-In integer linear optimization, we consider a weight capacity for a bag, a list of weights of the items, and a list of values of the items.
+In integer linear optimization, we consider a weight capacity for a bag, along with lists of item weights and values
 The goal of the Knapsack problem is to maximize the value of items placed in the bag without exceeding its weight capacity.
 
 More formally :
@@ -11,7 +11,7 @@ More formally :
     We want to determine $\max_i \{\sum_{i=1}^{n} v_{i}x_{i}\,|\,\sum_{i=1}^{n} w_{i}x_{i} < b, x_{i} \in \{0,1\}, i = 1,..,n\}$
 
 ## Algorithm
-### Upper bound :
+### Upper bound
     sort the items of the bag by value/weight
     upper_bound = 0
     weight_available = weight capacity of the bag
@@ -21,7 +21,7 @@ More formally :
         else:
             weight_available -= element weight
             upper_bound += element value
-### Lower bound:
+### Lower bound
     sort the items of the bag by value/weight
     upper_bound = 0
     weight_available = weight capacity of the bag
@@ -30,7 +30,7 @@ More formally :
             weight_available -= element weight
             upper_bound += element value
     return lower_bound
-### branch and bound:
+### Branch and bound
     if there there are no items in the bag return 0
     if upper_bound == lower_bound return upper_bound
     if weight_capacity of the bag >= weight of the first item in the bag
@@ -39,7 +39,7 @@ More formally :
         if value1 == upper_bound return upper_bound
     value2 branch and bound on the bag wihtouth the first item
     return the max between value1 and value2
-### dynamic prog:
+### Dynamic programming
     S = [0,0]
     for each element int the bag:
         for each pair in S:
@@ -47,7 +47,7 @@ More formally :
                 add element + pair to S
         delete redundant elements
     return the max of the values in S
-### dynamic prog with scale change:
+### Dynamic programming with adaptative scale
     S = [0,0]
     for each element int the bag:
         for each pair in S:
@@ -61,13 +61,13 @@ To find the solution to the KnapSack problem, create a KnapSack :
 ```python
 KnapSack(weight_capacity,array of items weight, array of items value)
 ```
-Then chose a solving algorithm between :\
+Then choose a solving algorithm between:
 
 * lower_bound (gives you a lower bound to the knapsack solution)
 * upper_bound (gives you an upper bound to the knapsack solution)
 * solve_branch_and_bound (gives you the exact solution to the knapsack)
 * solve_dynamic_prog (gives you the exact solution to the knapsack)
-* solve_dynamic_prog_scale_change (give you a lower_bound really close to the solution on large KnapSack)
+* solve_dynamic_prog_scale_change (gives you a lower bound very close to the solution for large Knapsack problems)
 
 
 ### Examples
