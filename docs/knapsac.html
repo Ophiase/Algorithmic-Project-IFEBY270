@@ -203,7 +203,14 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
-  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm"><span class="header-section-number">4.2</span> Algorithm</a></li>
+  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm"><span class="header-section-number">4.2</span> Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#upper-bound" id="toc-upper-bound" class="nav-link" data-scroll-target="#upper-bound"><span class="header-section-number">4.2.1</span> Upper bound</a></li>
+  <li><a href="#lower-bound" id="toc-lower-bound" class="nav-link" data-scroll-target="#lower-bound"><span class="header-section-number">4.2.2</span> Lower bound</a></li>
+  <li><a href="#branch-and-bound" id="toc-branch-and-bound" class="nav-link" data-scroll-target="#branch-and-bound"><span class="header-section-number">4.2.3</span> Branch and bound</a></li>
+  <li><a href="#dynamic-programming" id="toc-dynamic-programming" class="nav-link" data-scroll-target="#dynamic-programming"><span class="header-section-number">4.2.4</span> Dynamic programming</a></li>
+  <li><a href="#dynamic-programming-with-adaptative-scale" id="toc-dynamic-programming-with-adaptative-scale" class="nav-link" data-scroll-target="#dynamic-programming-with-adaptative-scale"><span class="header-section-number">4.2.5</span> Dynamic programming with adaptative scale</a></li>
+  </ul></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">4.3</span> Code</a>
   <ul class="collapse">
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">4.3.1</span> Examples</a></li>
@@ -235,60 +242,128 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
-<p>In integer linear optimization, we consider a weight capacity for a bag, a list of weights of the items, and a list of values of the items. The goal of the Knapsack problem is to maximize the value of items placed in the bag without exceeding its weight capacity.</p>
+<p>In integer linear optimization, we consider a weight capacity for a bag, along with lists of item weights and values The goal of the Knapsack problem is to maximize the value of items placed in the bag without exceeding its weight capacity.</p>
 <p>More formally : let <span class="math inline">\(b \in \Bbb N, w_{1},...,w_{n} \in \Bbb N^n, v_{1},...,v_{n} \in \Bbb N^n\)</span><br>
-We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_{i} | \sum_{i=1}^{n} w_{i}x_{i} &lt; b, x_{i} \in {0,1}, i = 1,..,n\}\)</span></p>
+We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_{i}\,|\,\sum_{i=1}^{n} w_{i}x_{i} &lt; b, x_{i} \in \{0,1\}, i = 1,..,n\}\)</span></p>
 </section>
 <section id="algorithm" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">4.2</span> Algorithm</h2>
+<section id="upper-bound" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="upper-bound"><span class="header-section-number">4.2.1</span> Upper bound</h3>
+<pre class="test"><code>    sort the items of the bag by value/weight
+    upper_bound = 0
+    weight_available = weight capacity of the bag
+    for each element in the bag:
+        if element weight &gt; weight available:
+            return upper_bound + element value * weight_available/element weight
+        else:
+            weight_available -= element weight
+            upper_bound += element value</code></pre>
+</section>
+<section id="lower-bound" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="lower-bound"><span class="header-section-number">4.2.2</span> Lower bound</h3>
+<pre class="text"><code>    sort the items of the bag by value/weight
+    upper_bound = 0
+    weight_available = weight capacity of the bag
+    for each element in the bag:
+        if element weight &lt; weight available:
+            weight_available -= element weight
+            upper_bound += element value
+    return lower_bound</code></pre>
+</section>
+<section id="branch-and-bound" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="branch-and-bound"><span class="header-section-number">4.2.3</span> Branch and bound</h3>
+<pre class="text"><code>    if there there are no items in the bag return 0
+    if upper_bound == lower_bound return upper_bound
+    if weight_capacity of the bag &gt;= weight of the first item in the bag
+        value1 = value of the first item in the bag + branch and bound on the bag
+        (weight_capacity - weight of the first item, items values[1:], items weights[1:])
+        if value1 == upper_bound return upper_bound
+    value2 branch and bound on the bag wihtouth the first item
+    return the max between value1 and value2</code></pre>
+</section>
+<section id="dynamic-programming" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="dynamic-programming"><span class="header-section-number">4.2.4</span> Dynamic programming</h3>
+<pre class="text"><code>    S = [0,0]
+    for each element int the bag:
+        for each pair in S:
+            if(element weight + pair weight &lt; weight capacity of the bag):
+                add element + pair to S
+        delete redundant elements
+    return the max of the values in S</code></pre>
+</section>
+<section id="dynamic-programming-with-adaptative-scale" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="dynamic-programming-with-adaptative-scale"><span class="header-section-number">4.2.5</span> Dynamic programming with adaptative scale</h3>
+<pre class="text"><code>    S = [0,0]
+    for each element int the bag:
+        for each pair in S:
+            if(element weight + pair weight &lt; weight capacity of the bag):
+                add element value/mu + pair value,element weight + pair weight to S
+        delete redundant elements
+    return the max of the values in S</code></pre>
+</section>
 </section>
 <section id="code" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="code"><span class="header-section-number">4.3</span> Code</h2>
 <p>To find the solution to the KnapSack problem, create a KnapSack :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>KnapSack(weight_capacity,array of items weight, array of items value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then chose a solving algorithm between :<br>
-</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>KnapSack(weight_capacity,array of items weight, array of items value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then choose a solving algorithm between :</p>
 <ul>
 <li>lower_bound (gives you a lower bound to the knapsack solution)</li>
 <li>upper_bound (gives you an upper bound to the knapsack solution)</li>
 <li>solve_branch_and_bound (gives you the exact solution to the knapsack)</li>
 <li>solve_dynamic_prog (gives you the exact solution to the knapsack)</li>
-<li>solve_dynamic_prog_scale_change (give you a lower_bound really close to the solution on large KnapSack)</li>
+<li>solve_dynamic_prog_scale_change (gives you a lower bound very close to the solution for large Knapsack problems)</li>
 </ul>
 <section id="examples" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.3.1</span> Examples</h3>
-<div id="e5ac6abb" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lower_bound  <span class="op">=</span> A.lower_bound()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>upper_bound  <span class="op">=</span> A.upper_bound()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>solution1    <span class="op">=</span> A.solve_branch_and_bound()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>solution2    <span class="op">=</span> A.solve_dynamic_prog()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>lower_bound2 <span class="op">=</span> A.solve_dynamic_prog_scale_change()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="22a0da0f" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8c19690a" class="cell" data-execution_count="3">
+<div id="9973ec9e" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
-<pre><code>lower bound: 6
-upper bound: 6.0
-solution 1: 6.0
-solution 2: 6
-lower bound 2: 4</code></pre>
+<pre><code>ks.lower_bound() : 6
+ks.upper bound() : 6.0
+ks.solve_branch_and_bound() : 6
+ks.solve_dynamic_prog() : 6
+ks.solve_dynamic_prog_scale_change() : 4</code></pre>
 </div>
 </div>
 <p>You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter<br>
 </p>
-<div id="54dcf5ae" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> A <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>])</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> A.solve_dynamic_prog()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lower_bound3 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">2</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>lower_bound4 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">4</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lower_bound5 <span class="op">=</span> A.solve_dynamic_prog_scale_change(<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="200ace00" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="525ea037" class="cell" data-execution_count="5">
+<div id="a3a0f509" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
-<pre><code>solution: 18
-lower bound 3: 16
-lower bound 4: 12
-lower bound 5: 8</code></pre>
+<pre><code>ks.lower_bound() : 18
+ks.upper bound() : 18.0
+ks.solve_branch_and_bound() : 18
+ks.solve_dynamic_prog() : 18
+ks.solve_dynamic_prog_scale_change() : 16</code></pre>
+</div>
+</div>
+<p>Tests with benchmark</p>
+<div id="e26e107e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_time(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Times
+    Lower Bound       : 0.000012 seconds
+    Upper Bound       : 0.000022 seconds
+    Dynamic Adaptative: 0.000030 seconds
+    Branch and Bound  : 0.000036 seconds
+    Dynamic           : 0.000036 seconds</code></pre>
+</div>
+</div>
+<div id="e3819848" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_precision(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Results
+    Dynamic            : 18, 100% of the solution , or 0 away from the solution
+    Branch and Bound   : 18, 100% of the solution , or 0 away from the solution
+    Upper Bound        : 18.0, 100% of the solution , or 0.0 away from the solution
+    Lower Bound        : 18, 100% of the solution , or 0 away from the solution
+    Dynamic Adaptative : 16, 89% of the solution , or -2 away from the solution</code></pre>
 </div>
 </div>
 
