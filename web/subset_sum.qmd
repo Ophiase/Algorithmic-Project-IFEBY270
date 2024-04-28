@@ -6,7 +6,7 @@ title: SubSet Sum
 
 Given a set of integers $S$ and an integer $M$, we want to find the biggest subset sum of $S$ such that the sum of its elements does not exceed $M$. 
 
-The decision problem about the existence of such a set is known to be NP-Hard.
+The associated decision problem is to find a subset sum that is strictly equal to $M$, the existence of such a set is known to be NP-Hard.
 
 Perhaps, there exist two heuristics for the above problem: LLL and a dynamic programming approach.
 
