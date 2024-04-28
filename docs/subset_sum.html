@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Report - Algorithmic Project IFEBY270 - 3&nbsp; Nash Equilibrium</title>
+<title>Report - Algorithmic Project IFEBY270 - 5&nbsp; SubSet Sum</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./knapsac.html" rel="next">
-<link href="./simplexe.html" rel="prev">
+<link href="./knapsac.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./nash_equilibrium.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Nash Equilibrium</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./subset_sum.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SubSet Sum</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -186,7 +185,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nash_equilibrium.html" class="sidebar-item-text sidebar-link active">
+  <a href="./nash_equilibrium.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Nash Equilibrium</span></span></a>
   </div>
 </li>
@@ -198,7 +197,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./subset_sum.html" class="sidebar-item-text sidebar-link">
+  <a href="./subset_sum.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SubSet Sum</span></span></a>
   </div>
 </li>
@@ -212,21 +211,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3.1</span> Introduction</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">5.1</span> Introduction</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">5.2</span> Code</a>
   <ul class="collapse">
-  <li><a href="#definition-stochastic-vector-and-strategie" id="toc-definition-stochastic-vector-and-strategie" class="nav-link" data-scroll-target="#definition-stochastic-vector-and-strategie"><span class="header-section-number">3.1.1</span> <ins>Definition</ins> Stochastic vector and Strategie</a></li>
-  <li><a href="#definition-zero-sum-game" id="toc-definition-zero-sum-game" class="nav-link" data-scroll-target="#definition-zero-sum-game"><span class="header-section-number">3.1.2</span> <ins>Definition</ins> Zero-sum game</a></li>
-  <li><a href="#definition-nash-equilibrium" id="toc-definition-nash-equilibrium" class="nav-link" data-scroll-target="#definition-nash-equilibrium"><span class="header-section-number">3.1.3</span> <ins>Definition</ins> Nash equilibrium</a></li>
-  </ul></li>
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">3.2</span> Code</a>
-  <ul class="collapse">
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">3.2.1</span> Examples</a></li>
-  </ul></li>
-  <li><a href="#modelization" id="toc-modelization" class="nav-link" data-scroll-target="#modelization"><span class="header-section-number">3.3</span> Modelization</a>
-  <ul class="collapse">
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">3.3.1</span> Variables :</a></li>
-  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints"><span class="header-section-number">3.3.2</span> Constraints</a></li>
-  <li><a href="#objective-function" id="toc-objective-function" class="nav-link" data-scroll-target="#objective-function"><span class="header-section-number">3.3.3</span> Objective function :</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">5.2.1</span> Examples</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -236,7 +224,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Nash Equilibrium</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SubSet Sum</span></h1>
 </div>
 
 
@@ -253,178 +241,59 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
-<p>In game theory we consider two rational agents <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> that both want to maximize their score.<br>
-In discrete cases, <span class="math inline">\(x\)</span> has <span class="math inline">\(m\)</span> possible actions, <span class="math inline">\(y\)</span> has n possible actions.</p>
-<p>If <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> play simultaneously, we can considers the matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of dimension <span class="math inline">\((m,n)\)</span>.<br>
-<span class="math inline">\(A_{i,j}\)</span> and <span class="math inline">\(B_{i, j}\)</span> represents respectivily the score of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> plays his <span class="math inline">\(i\)</span>-th action and <span class="math inline">\(y\)</span> his <span class="math inline">\(j\)</span>-th action.</p>
-<p>For convenience, we will also call player <span class="math inline">\(x\)</span> as <span class="math inline">\(a\)</span>, and <span class="math inline">\(y\)</span> as <span class="math inline">\(b\)</span>.</p>
-<section id="definition-stochastic-vector-and-strategie" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="definition-stochastic-vector-and-strategie"><span class="header-section-number">3.1.1</span> <ins>Definition</ins> Stochastic vector and Strategie</h3>
-<p>Let <span class="math inline">\(v\)</span> a vector. If <span class="math inline">\(\sum v_i = 1\)</span> and <span class="math inline">\(\forall i, v_i \geq 0\)</span>, <span class="math inline">\(v\)</span> is a stochastic vector.</p>
-<p>We call the strategy of the player <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the stochastic vectors <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> that represents the probabilty of choosing each actions. If only one coefficient of a strategy is none negative (ie. equal to one), we call it a pure strategy.</p>
-<p>A best strategy <span class="math inline">\(\overline v\)</span> is a strategy that maximise the gain of its player :<br>
-</p>
+<section id="introduction" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">5.1</span> Introduction</h2>
+<p>Given a set of integers <span class="math inline">\(S\)</span> and an integer <span class="math inline">\(M\)</span>, we want to find the biggest subset sum of <span class="math inline">\(S\)</span> such that the sum of its elements does not exceed <span class="math inline">\(M\)</span>.</p>
+<p>The decision problem about the existence of such a set is known to be NP-Hard.</p>
+<p>Perhaps, there exist two heuristics for the above problem: LLL and a dynamic programming approach.</p>
+<p>Remark : the general <a href="https://en.wikipedia.org/wiki/Subset_sum_problem">SubSet Sum problem</a> allows <span class="math inline">\(S\)</span> to be a MultiSet.</p>
+</section>
+<section id="code" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="code"><span class="header-section-number">5.2</span> Code</h2>
+<p>Let <span class="math inline">\(S\)</span> be a python set of integers and <span class="math inline">\(M\)</span> the target value.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> <span class="bu">set</span>(<span class="op">&lt;</span>values<span class="op">&gt;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> <span class="op">&lt;</span>target_value<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To find a solution to the subset sum problem, create a subset and solve it.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> SubSet(S, M)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dynamic_solution <span class="op">=</span> problem.solve_dynamic_prog()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>LLL_solution <span class="op">=</span> problem.solve_LLL()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li><span class="math inline">\(\overline x \in \arg \max_x x A y^t\)</span></li>
-<li><span class="math inline">\(\overline y \in \arg \max_x x B y^t\)</span></li>
+<li>Dynamic
+<ul>
+<li><code>solve_dynamic_prog</code> returns a couple (target, chosen elemements), as if there is no solution to the problem, it will give the closest to the target.<br>
+</li>
+</ul></li>
+<li>LLL
+<ul>
+<li>solve_LLL returns a vector corresponding to the chosen elements</li>
+</ul></li>
 </ul>
-<ins>
-Propertie :
-</ins>
-<p>A best strategy is always of convex combination of pure strategies.</p>
-</section>
-<section id="definition-zero-sum-game" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="definition-zero-sum-game"><span class="header-section-number">3.1.2</span> <ins>Definition</ins> Zero-sum game</h3>
-<p>Zero-sum game is defined by <span class="math inline">\(B = -A\)</span>, which means every gain for <span class="math inline">\(x\)</span> is a loss of the same amplitude to <span class="math inline">\(y\)</span>, and the other way around.</p>
-</section>
-<section id="definition-nash-equilibrium" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="definition-nash-equilibrium"><span class="header-section-number">3.1.3</span> <ins>Definition</ins> Nash equilibrium</h3>
-<p>A nash equilibrium is a couple <span class="math inline">\((x, y)\)</span> of strategies, where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are both best strategies.</p>
-<section id="theorem-a-nash-equilibrium-always-exists." class="level4" data-number="3.1.3.1">
-<h4 data-number="3.1.3.1" class="anchored" data-anchor-id="theorem-a-nash-equilibrium-always-exists."><span class="header-section-number">3.1.3.1</span> <ins>Theorem:</ins> A nash equilibrium always exists.</h4>
-<p>Remark: If we impose strategies to be pure, the theorem doesn’t hold. (eg: paper, rock, scissor)</p>
-</section>
-</section>
-</section>
-<section id="code" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="code"><span class="header-section-number">3.2</span> Code</h2>
-<p>To find the nash equilibrium, create a NashEquilibrium object, and solve it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="examples" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.2.1</span> Examples</h3>
-<div id="088220cd" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paper Rock Scissor</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>],</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, <span class="op">-</span>A).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternative constructors :</p>
+<ul>
+<li>Concatenantion :
+<ul>
+<li><code>SubSet(S + M)</code></li>
+</ul></li>
+<li>Random example :
+<ul>
+<li><code>SubSet.generate_random_low_density_subset_problem(number_of_elements, density)</code></li>
+<li>If you dont specify parameters, the number of elements will be a random number between 0 and 20, and the density will be 0.5</li>
+</ul></li>
+</ul>
+<section id="examples" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">5.2.1</span> Examples</h3>
+<div id="c52525fc" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> SubSet([<span class="dv">23603</span>, <span class="dv">6105</span>, <span class="dv">5851</span>, <span class="dv">19660</span>, <span class="dv">8398</span>, <span class="dv">8545</span>, <span class="dv">14712</span>], <span class="dv">37760</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dynamic_solution <span class="op">=</span> problem.solve_dynamic_prog()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>LLL_solution <span class="op">=</span> problem.solve_LLL()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5dcee3d4" class="cell" data-execution_count="3">
+<div id="921356f1" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
-<pre><code>x: [0.33333333 0.33333333 0.33333333]
-y: [0.33333333 0.33333333 0.33333333]</code></pre>
+<pre><code>Dynamic solution : (37760, [6105, 8398, 8545, 14712])
+LLL solution : [0, 1, 0, 0, 1, 1, 1]</code></pre>
 </div>
 </div>
-<div id="b63e5c97" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-zero sum game</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]]) </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">4</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">1</span>]])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="f5156e19" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-stdout">
-<pre><code>x: [0. 1.]
-y: [1. 0.]</code></pre>
-</div>
-</div>
-<div id="ed6b3640" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">3</span>, <span class="dv">2</span>], [<span class="dv">1</span>, <span class="dv">4</span>]]) </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">1</span>], [<span class="dv">3</span>, <span class="dv">2</span>]])</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="113dc58a" class="cell" data-execution_count="7">
-<div class="cell-output cell-output-stdout">
-<pre><code>x: [1. 0.]
-y: [1. 0.]</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="modelization" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="modelization"><span class="header-section-number">3.3</span> Modelization</h2>
-<p>We solve this problem using pulp with mixted linear programming (linear + discrete).</p>
-<section id="variables" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="variables"><span class="header-section-number">3.3.1</span> Variables :</h3>
-<table class="table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Player a</th>
-<th>Player b</th>
-<th>Domain</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Strategies</td>
-<td><span class="math inline">\(x_{a1}, \dots, x_{am}\)</span></td>
-<td><span class="math inline">\(x_{b1}, \dots, x_{bn}\)</span></td>
-<td><span class="math inline">\([0,1]\)</span></td>
-</tr>
-<tr class="even">
-<td>Strategies supports</td>
-<td><span class="math inline">\(s_{a1}, \dots s_{am}\)</span></td>
-<td><span class="math inline">\(s_{b1}, \dots, s_{bn}\)</span></td>
-<td><span class="math inline">\(\{0, 1\}\)</span></td>
-</tr>
-<tr class="odd">
-<td>Regrets</td>
-<td><span class="math inline">\(r_{a1}, \dots, r_{am}\)</span></td>
-<td><span class="math inline">\(r_{b1}, \dots r_{bn}\)</span></td>
-<td><span class="math inline">\([0, M]\)</span></td>
-</tr>
-<tr class="even">
-<td>Potential Gain</td>
-<td>potential_gain_a</td>
-<td>potential_gain_b</td>
-<td><span class="math inline">\([LG, HG]\)</span></td>
-</tr>
-<tr class="odd">
-<td>Max Gain (scalar)</td>
-<td>max_gain_a</td>
-<td>max_gain_b</td>
-<td><span class="math inline">\([LG, HG]\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>M represents respectively the max regret for <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.<br>
-<span class="math inline">\(M_a := \max A_{ij} - \min A_{ij}\)</span> &nbsp; <span class="math inline">\(M_b := \max B_{ij} - \min B_{ij}\)</span><br>
-HG represents respectively the highest gain for <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.<br>
-<span class="math inline">\(HG_a := \max A_{ij}\)</span> &nbsp; <span class="math inline">\(HG_b := \max B_{ij}\)</span><br>
-LG represents respectively the lowest gain for <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.<br>
-<span class="math inline">\(LG_a := \min A_{ij}\)</span> &nbsp; <span class="math inline">\(LG_b := \min B_{ij}\)</span></p>
-</section>
-<section id="constraints" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="constraints"><span class="header-section-number">3.3.2</span> Constraints</h3>
-<section id="eq-constraint-stochastic-vectors" class="level4" data-number="3.3.2.1">
-<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="eq-constraint-stochastic-vectors"><span class="header-section-number">3.3.2.1</span> [Eq Constraint] Stochastic vectors</h4>
-<p><span class="math inline">\(\sum x_{ai} = 1\)</span><br>
-<span class="math inline">\(\sum x_{bi} = 1\)</span></p>
-</section>
-<section id="eq-constraint-potential-gain" class="level4" data-number="3.3.2.2">
-<h4 data-number="3.3.2.2" class="anchored" data-anchor-id="eq-constraint-potential-gain"><span class="header-section-number">3.3.2.2</span> [Eq Constraint] Potential gain</h4>
-<p>potential_gain_a <span class="math inline">\(= A y^t\)</span><br>
-potential_gain_b <span class="math inline">\(= x B\)</span></p>
-</section>
-<section id="constraint-max-gain" class="level4" data-number="3.3.2.3">
-<h4 data-number="3.3.2.3" class="anchored" data-anchor-id="constraint-max-gain"><span class="header-section-number">3.3.2.3</span> [Constraint] Max gain</h4>
-<p><span class="math inline">\(\forall i\)</span> max_gain_a <span class="math inline">\(\geq\)</span> potential_gain_a<span class="math inline">\(_i\)</span><br>
-<span class="math inline">\(\forall j\)</span> max_gain_b <span class="math inline">\(\geq\)</span> potential_gain_b<span class="math inline">\(_j\)</span></p>
-</section>
-<section id="eq-constraint-risk" class="level4" data-number="3.3.2.4">
-<h4 data-number="3.3.2.4" class="anchored" data-anchor-id="eq-constraint-risk"><span class="header-section-number">3.3.2.4</span> [Eq Constraint] Risk</h4>
-<p><span class="math inline">\(\vec{r_a} =\)</span> potential_gain_a <span class="math inline">\(-\)</span> max_gain_a<br>
-<span class="math inline">\(\vec{r_b} =\)</span> potential_gain_b <span class="math inline">\(-\)</span> max_gain_b</p>
-</section>
-<section id="constraint-best-strategy-constraint" class="level4" data-number="3.3.2.5">
-<h4 data-number="3.3.2.5" class="anchored" data-anchor-id="constraint-best-strategy-constraint"><span class="header-section-number">3.3.2.5</span> [Constraint] Best strategy constraint</h4>
-<p><span class="math inline">\(\forall i :\quad\)</span> <span class="math inline">\(x_{ai} \leq s_{ai} \qquad\)</span> <span class="math inline">\(r_{ai} \leq (1 - s_{ai}) \times M_a\)</span><br>
-<span class="math inline">\(\forall j :\quad\)</span> <span class="math inline">\(x_{bj} \leq s_{bi} \qquad\)</span> <span class="math inline">\(r_{bj} \leq (1 - s_{bj}) \times M_b\)</span></p>
-</section>
-</section>
-<section id="objective-function" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="objective-function"><span class="header-section-number">3.3.3</span> Objective function :</h3>
-<p><strong>Minimize</strong> : <span class="math inline">\(\sum r_{ai} + \sum r_{bi}\)</span></p>
 
 
 </section>
@@ -842,14 +711,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./simplexe.html" class="pagination-link" aria-label="Simplexe">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></span>
+      <a href="./knapsac.html" class="pagination-link" aria-label="KnapSac">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">KnapSac</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./knapsac.html" class="pagination-link" aria-label="KnapSac">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">KnapSac</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

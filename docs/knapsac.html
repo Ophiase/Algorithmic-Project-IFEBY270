@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./subset_sum.html" rel="next">
 <link href="./nash_equilibrium.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -159,6 +160,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Report - Algorithmic Project IFEBY270</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Report---Algorithmic-Project-IFEBY270.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -190,6 +194,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./knapsac.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">KnapSac</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./subset_sum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SubSet Sum</span></span></a>
   </div>
 </li>
     </ul>
@@ -317,10 +327,10 @@ We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_
 </ul>
 <section id="examples" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.3.1</span> Examples</h3>
-<div id="22a0da0f" class="cell" data-execution_count="3">
+<div id="2d4a8591" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9973ec9e" class="cell" data-execution_count="4">
+<div id="d0b3b0f6" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>ks.lower_bound() : 6
 ks.upper bound() : 6.0
@@ -331,10 +341,10 @@ ks.solve_dynamic_prog_scale_change() : 4</code></pre>
 </div>
 <p>You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter<br>
 </p>
-<div id="200ace00" class="cell" data-execution_count="5">
+<div id="34f4ab4d" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a3a0f509" class="cell" data-execution_count="6">
+<div id="79d4ff7c" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>ks.lower_bound() : 18
 ks.upper bound() : 18.0
@@ -344,18 +354,18 @@ ks.solve_dynamic_prog_scale_change() : 16</code></pre>
 </div>
 </div>
 <p>Tests with benchmark</p>
-<div id="e26e107e" class="cell" data-execution_count="7">
+<div id="98dc27c5" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_time(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Times
-    Lower Bound       : 0.000012 seconds
-    Upper Bound       : 0.000022 seconds
-    Dynamic Adaptative: 0.000030 seconds
-    Branch and Bound  : 0.000036 seconds
-    Dynamic           : 0.000036 seconds</code></pre>
+    Lower Bound       : 0.000006 seconds
+    Upper Bound       : 0.000012 seconds
+    Dynamic Adaptative: 0.000015 seconds
+    Branch and Bound  : 0.000018 seconds
+    Dynamic           : 0.000018 seconds</code></pre>
 </div>
 </div>
-<div id="e3819848" class="cell" data-execution_count="8">
+<div id="9efdd420" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_precision(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Results
@@ -788,6 +798,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./subset_sum.html" class="pagination-link" aria-label="SubSet Sum">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SubSet Sum</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

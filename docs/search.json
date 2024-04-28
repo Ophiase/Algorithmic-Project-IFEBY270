@@ -124,9 +124,29 @@
     "href": "knapsac.html#code",
     "title": "4  KnapSac",
     "section": "4.3 Code",
-    "text": "4.3 Code\nTo find the solution to the KnapSack problem, create a KnapSack :\nKnapSack(weight_capacity,array of items weight, array of items value)\nThen choose a solving algorithm between :\n\nlower_bound (gives you a lower bound to the knapsack solution)\nupper_bound (gives you an upper bound to the knapsack solution)\nsolve_branch_and_bound (gives you the exact solution to the knapsack)\nsolve_dynamic_prog (gives you the exact solution to the knapsack)\nsolve_dynamic_prog_scale_change (gives you a lower bound very close to the solution for large Knapsack problems)\n\n\n4.3.1 Examples\n\nks = KnapSack(3,[1,1,1,2],[3,2,1,1])\n\n\n\nks.lower_bound() : 6\nks.upper bound() : 6.0\nks.solve_branch_and_bound() : 6\nks.solve_dynamic_prog() : 6\nks.solve_dynamic_prog_scale_change() : 4\n\n\nYou can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\n\n\nks = KnapSack(3,[1,1,1,2],[8,7,3,1])\n\n\n\nks.lower_bound() : 18\nks.upper bound() : 18.0\nks.solve_branch_and_bound() : 18\nks.solve_dynamic_prog() : 18\nks.solve_dynamic_prog_scale_change() : 16\n\n\nTests with benchmark\n\nTestKnapSack.benchmark_time(ks)\n\nTimes\n    Lower Bound       : 0.000012 seconds\n    Upper Bound       : 0.000022 seconds\n    Dynamic Adaptative: 0.000030 seconds\n    Branch and Bound  : 0.000036 seconds\n    Dynamic           : 0.000036 seconds\n\n\n\nTestKnapSack.benchmark_precision(ks)\n\nResults\n    Dynamic            : 18, 100% of the solution , or 0 away from the solution\n    Branch and Bound   : 18, 100% of the solution , or 0 away from the solution\n    Upper Bound        : 18.0, 100% of the solution , or 0.0 away from the solution\n    Lower Bound        : 18, 100% of the solution , or 0 away from the solution\n    Dynamic Adaptative : 16, 89% of the solution , or -2 away from the solution",
+    "text": "4.3 Code\nTo find the solution to the KnapSack problem, create a KnapSack :\nKnapSack(weight_capacity,array of items weight, array of items value)\nThen choose a solving algorithm between :\n\nlower_bound (gives you a lower bound to the knapsack solution)\nupper_bound (gives you an upper bound to the knapsack solution)\nsolve_branch_and_bound (gives you the exact solution to the knapsack)\nsolve_dynamic_prog (gives you the exact solution to the knapsack)\nsolve_dynamic_prog_scale_change (gives you a lower bound very close to the solution for large Knapsack problems)\n\n\n4.3.1 Examples\n\nks = KnapSack(3,[1,1,1,2],[3,2,1,1])\n\n\n\nks.lower_bound() : 6\nks.upper bound() : 6.0\nks.solve_branch_and_bound() : 6\nks.solve_dynamic_prog() : 6\nks.solve_dynamic_prog_scale_change() : 4\n\n\nYou can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\n\n\nks = KnapSack(3,[1,1,1,2],[8,7,3,1])\n\n\n\nks.lower_bound() : 18\nks.upper bound() : 18.0\nks.solve_branch_and_bound() : 18\nks.solve_dynamic_prog() : 18\nks.solve_dynamic_prog_scale_change() : 16\n\n\nTests with benchmark\n\nTestKnapSack.benchmark_time(ks)\n\nTimes\n    Lower Bound       : 0.000006 seconds\n    Upper Bound       : 0.000012 seconds\n    Dynamic Adaptative: 0.000015 seconds\n    Branch and Bound  : 0.000018 seconds\n    Dynamic           : 0.000018 seconds\n\n\n\nTestKnapSack.benchmark_precision(ks)\n\nResults\n    Dynamic            : 18, 100% of the solution , or 0 away from the solution\n    Branch and Bound   : 18, 100% of the solution , or 0 away from the solution\n    Upper Bound        : 18.0, 100% of the solution , or 0.0 away from the solution\n    Lower Bound        : 18, 100% of the solution , or 0 away from the solution\n    Dynamic Adaptative : 16, 89% of the solution , or -2 away from the solution",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>KnapSac</span>"
+    ]
+  },
+  {
+    "objectID": "subset_sum.html",
+    "href": "subset_sum.html",
+    "title": "5  SubSet Sum",
+    "section": "",
+    "text": "5.1 Introduction\nGiven a set of integers \\(S\\) and an integer \\(M\\), we want to find the biggest subset sum of \\(S\\) such that the sum of its elements does not exceed \\(M\\).\nThe decision problem about the existence of such a set is known to be NP-Hard.\nPerhaps, there exist two heuristics for the above problem: LLL and a dynamic programming approach.\nRemark : the general SubSet Sum problem allows \\(S\\) to be a MultiSet.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>SubSet Sum</span>"
+    ]
+  },
+  {
+    "objectID": "subset_sum.html#code",
+    "href": "subset_sum.html#code",
+    "title": "5  SubSet Sum",
+    "section": "5.2 Code",
+    "text": "5.2 Code\nLet \\(S\\) be a python set of integers and \\(M\\) the target value.\nS = set(&lt;values&gt;)\nM = &lt;target_value&gt;\nTo find a solution to the subset sum problem, create a subset and solve it.\nproblem = SubSet(S, M)\ndynamic_solution = problem.solve_dynamic_prog()\nLLL_solution = problem.solve_LLL()\n\nDynamic\n\nsolve_dynamic_prog returns a couple (target, chosen elemements), as if there is no solution to the problem, it will give the closest to the target.\n\n\nLLL\n\nsolve_LLL returns a vector corresponding to the chosen elements\n\n\nAlternative constructors :\n\nConcatenantion :\n\nSubSet(S + M)\n\nRandom example :\n\nSubSet.generate_random_low_density_subset_problem(number_of_elements, density)\nIf you dont specify parameters, the number of elements will be a random number between 0 and 20, and the density will be 0.5\n\n\n\n5.2.1 Examples\n\nproblem = SubSet([23603, 6105, 5851, 19660, 8398, 8545, 14712], 37760)\n\ndynamic_solution = problem.solve_dynamic_prog()\nLLL_solution = problem.solve_LLL()\n\n\n\nDynamic solution : (37760, [6105, 8398, 8545, 14712])\nLLL solution : [0, 1, 0, 0, 1, 1, 1]",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>SubSet Sum</span>"
     ]
   }
 ]
