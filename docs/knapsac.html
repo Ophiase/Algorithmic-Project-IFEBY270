@@ -327,10 +327,10 @@ We want to determine <span class="math inline">\(\max_i \{\sum_{i=1}^{n} v_{i}x_
 </ul>
 <section id="examples" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.3.1</span> Examples</h3>
-<div id="2d4a8591" class="cell" data-execution_count="3">
+<div id="1312ab9f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d0b3b0f6" class="cell" data-execution_count="4">
+<div id="bdce9aa1" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>ks.lower_bound() : 6
 ks.upper bound() : 6.0
@@ -341,10 +341,10 @@ ks.solve_dynamic_prog_scale_change() : 4</code></pre>
 </div>
 <p>You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter<br>
 </p>
-<div id="34f4ab4d" class="cell" data-execution_count="5">
+<div id="fe6d815e" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> KnapSack(<span class="dv">3</span>,[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="79d4ff7c" class="cell" data-execution_count="6">
+<div id="df39bb2f" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>ks.lower_bound() : 18
 ks.upper bound() : 18.0
@@ -354,18 +354,18 @@ ks.solve_dynamic_prog_scale_change() : 16</code></pre>
 </div>
 </div>
 <p>Tests with benchmark</p>
-<div id="98dc27c5" class="cell" data-execution_count="7">
+<div id="dd800754" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_time(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Times
-    Lower Bound       : 0.000006 seconds
-    Upper Bound       : 0.000012 seconds
-    Dynamic Adaptative: 0.000015 seconds
-    Branch and Bound  : 0.000018 seconds
-    Dynamic           : 0.000018 seconds</code></pre>
+    Lower Bound       : 0.000003 seconds
+    Upper Bound       : 0.000006 seconds
+    Dynamic Adaptative: 0.000011 seconds
+    Branch and Bound  : 0.000012 seconds
+    Dynamic           : 0.000013 seconds</code></pre>
 </div>
 </div>
-<div id="9efdd420" class="cell" data-execution_count="8">
+<div id="4dd92cef" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TestKnapSack.benchmark_precision(ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Results
