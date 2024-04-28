@@ -11,6 +11,9 @@ class SubSet:
             self.set = set
             self.target = target
 
+    def __str__(self):
+        return f"Subset sum problem of target : {self.target}, of set : {self.set}"
+
     @staticmethod
     def generate_random_low_density_subset_problem(n = None, density = 0.5):
         """
