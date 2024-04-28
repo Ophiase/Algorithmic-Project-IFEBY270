@@ -12,6 +12,7 @@ More formally :
 
 ## Algorithm
 ### Upper bound
+```test
     sort the items of the bag by value/weight
     upper_bound = 0
     weight_available = weight capacity of the bag
@@ -21,7 +22,10 @@ More formally :
         else:
             weight_available -= element weight
             upper_bound += element value
+```
+
 ### Lower bound
+```text
     sort the items of the bag by value/weight
     upper_bound = 0
     weight_available = weight capacity of the bag
@@ -30,7 +34,10 @@ More formally :
             weight_available -= element weight
             upper_bound += element value
     return lower_bound
+```
+
 ### Branch and bound
+```text
     if there there are no items in the bag return 0
     if upper_bound == lower_bound return upper_bound
     if weight_capacity of the bag >= weight of the first item in the bag
@@ -39,7 +46,9 @@ More formally :
         if value1 == upper_bound return upper_bound
     value2 branch and bound on the bag wihtouth the first item
     return the max between value1 and value2
+```
 ### Dynamic programming
+```text
     S = [0,0]
     for each element int the bag:
         for each pair in S:
@@ -47,7 +56,9 @@ More formally :
                 add element + pair to S
         delete redundant elements
     return the max of the values in S
+```
 ### Dynamic programming with adaptative scale
+```text
     S = [0,0]
     for each element int the bag:
         for each pair in S:
@@ -55,13 +66,14 @@ More formally :
                 add element value/mu + pair value,element weight + pair weight to S
         delete redundant elements
     return the max of the values in S
+```
 
 ## Code
 To find the solution to the KnapSack problem, create a KnapSack :
 ```python
 KnapSack(weight_capacity,array of items weight, array of items value)
 ```
-Then choose a solving algorithm between:
+Then choose a solving algorithm between :
 
 * lower_bound (gives you a lower bound to the knapsack solution)
 * upper_bound (gives you an upper bound to the knapsack solution)
@@ -79,41 +91,42 @@ from src.algorithm.knapsack.knapsack import KnapSack
 ```
 
 ```{python}
-knapsack = KnapSack(3,[1,1,1,2],[3,2,1,1])
-lower_bound  = knapsack.lower_bound()
-upper_bound  = knapsack.upper_bound()
-solution1    = knapsack.solve_branch_and_bound()
-solution2    = knapsack.solve_dynamic_prog()
-lower_bound2 = knapsack.solve_dynamic_prog_scale_change()
-```
-```{python}
 #| echo: false
-print(f"lower bound: {lower_bound}")
-print(f"upper bound: {upper_bound}")
-print(f"solution 1: {solution1}")
-print(f"solution 2: {solution2}")
-print(f"lower bound 2: {lower_bound2}")
-```
-You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\
-```{python}
-knapsack = KnapSack(3,[1,1,1,2],[8,7,3,1])
-solution = knapsack.solve_dynamic_prog()
-lower_bound_2 = knapsack.solve_dynamic_prog_scale_change(2)
-lower_bound_4 = knapsack.solve_dynamic_prog_scale_change(4)
-lower_bound_8 = knapsack.solve_dynamic_prog_scale_change(8)
-```
-```{python}
-#| echo: false
-print(f"solution: {solution}")
-print(f"lower bound 2: {lower_bound_2}")
-print(f"lower bound 4: {lower_bound_4}")
-print(f"lower bound 8: {lower_bound_8}")
+def example(ks):
+    lower_bound  = ks.lower_bound()
+    upper_bound  = ks.upper_bound()
+    solution1    = ks.solve_branch_and_bound()
+    solution2    = ks.solve_dynamic_prog()
+    lower_bound2 = ks.solve_dynamic_prog_scale_change()
+
+    print(f"ks.lower_bound() : {lower_bound}")
+    print(f"ks.upper bound() : {upper_bound}")
+    print(f"ks.solve_branch_and_bound() : {solution1}")
+    print(f"ks.solve_dynamic_prog() : {solution2}")
+    print(f"ks.solve_dynamic_prog_scale_change() : {lower_bound2}")
 ```
 
-Test with benchmark
 ```{python}
-TestKnapSack.benchmark_time(knapsack)
+ks = KnapSack(3,[1,1,1,2],[3,2,1,1])
 ```
 ```{python}
-TestKnapSack.benchmark_precision(knapsack)
+#| echo: false
+example(ks)
+```
+
+You can make solve_dynamic_prog_scale_change run faster and use less memory by passing a larger mu as parameter\
+```{python}
+ks = KnapSack(3,[1,1,1,2],[8,7,3,1])
+```
+```{python}
+#| echo: false
+example(ks)
+```
+
+Tests with benchmark
+```{python}
+TestKnapSack.benchmark_time(ks)
+```
+```{python}
+TestKnapSack.benchmark_precision(ks)
 ```

@@ -285,7 +285,7 @@ Propertie :
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="examples" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.2.1</span> Examples</h3>
-<div id="ce7ac6ea" class="cell" data-execution_count="2">
+<div id="03a6b067" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paper Rock Scissor</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>],</span>
@@ -294,30 +294,30 @@ Propertie :
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>])</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, <span class="op">-</span>A).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f52c0c54" class="cell" data-execution_count="3">
+<div id="00c26f42" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [0.33333333 0.33333333 0.33333333]
 y: [0.33333333 0.33333333 0.33333333]</code></pre>
 </div>
 </div>
-<div id="00363b31" class="cell" data-execution_count="4">
+<div id="22d80174" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-zero sum game</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]]) </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">4</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">1</span>]])</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f0d21ac9" class="cell" data-execution_count="5">
+<div id="b70d1617" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [0. 1.]
 y: [1. 0.]</code></pre>
 </div>
 </div>
-<div id="33ab8d14" class="cell" data-execution_count="6">
+<div id="74522411" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">3</span>, <span class="dv">2</span>], [<span class="dv">1</span>, <span class="dv">4</span>]]) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">1</span>], [<span class="dv">3</span>, <span class="dv">2</span>]])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="2be1088b" class="cell" data-execution_count="7">
+<div id="eaa56c38" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [1. 0.]
 y: [1. 0.]</code></pre>

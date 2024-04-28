@@ -20,20 +20,20 @@ class TestNashEquilibrium(unittest.TestCase):
 
     @staticmethod
     def extract_column_values_from_file(file_path):
-        valeurs1 = []
-        valeurs2 = []
+        value_a = []
+        value_b = []
         with open(file_path, "r") as fichier:
             for line in fichier:
                 if ":" in line and "[" in line:
-                    valeurs = line.split(":")[1].strip().split()
-                    if len(valeurs) == 4:
-                        valeurs1.append(float(valeurs[1]))
-                        valeurs2.append(float(valeurs[2]))
-        return valeurs1, valeurs2
+                    values = line.split(":")[1].strip().split()
+                    if len(values) == 4:
+                        value_a.append(float(values[1]))
+                        value_b.append(float(values[2]))
+        return value_a, value_b
 
     def check_equilibrium(self,
-                          A: np.array, B: np.array,
-                          wanted_equilibrium: tuple = None):
+        A: np.array, B: np.array,
+        wanted_equilibrium: tuple = None) :
 
         print("\n")
         print(f"A: {A}")
