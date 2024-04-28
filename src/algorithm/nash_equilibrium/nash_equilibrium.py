@@ -148,7 +148,14 @@ class NashEquilibrium:
     
     @staticmethod
     def _init_xrs_variables(
-        i, x, r, s, potential_gain, letter, risk_bound, gain_low_bound, gain_up_bound):
+        i, x, r, s, 
+        potential_gain, 
+        letter, 
+        risk_bound, gain_low_bound, gain_up_bound
+        ):
+        """
+        Init Variables
+        """
         x.append(pulp.LpVariable(f"x{letter}_{i}", lowBound=0, upBound=1)) # [0, 1]
         r.append(pulp.LpVariable(f"r{letter}_{i}", lowBound=0, upBound=risk_bound)) # >= 0
         s.append(pulp.LpVariable(f"s{letter}_{i}", cat=pulp.LpBinary)) # {0, 1}
@@ -157,6 +164,10 @@ class NashEquilibrium:
                 f"potential_gain_{letter}_{i}", lowBound=gain_low_bound, upBound=gain_up_bound))
     
     def _init_variables(self):
+        '''
+        Init Variables
+        '''
+        
         self.xa, self.xb = [], [] # strategies
         self.ra, self.rb = [], [] # regrets
         self.sa, self.sb = [], [] # supports
@@ -180,6 +191,10 @@ class NashEquilibrium:
             f"max_gain_b", lowBound=self.min_b, upBound=self.max_b)
 
     def _compute_potential_gain(self):
+        '''
+        Constraints
+        '''
+
         for i in range(self.m):
             self.prob += self.potential_gain_a[i] ==  \
                 pulp.lpSum([self.A[i][j] * self.xb[j] for j in range(self.n)])
@@ -189,12 +204,20 @@ class NashEquilibrium:
                 pulp.lpSum([self.B[i][j] * self.xa[i] for i in range(self.m)])
 
     def _compute_max_gain(self):
+        '''
+        Constraints
+        '''
+                
         for gain in self.potential_gain_a:
             self.prob += self.max_gain_a >= gain
         for gain in self.potential_gain_b:
             self.prob += self.max_gain_b >= gain
 
     def _compute_risk(self):
+        '''
+        Constraints
+        '''
+                
         for i in range(self.m):
             self.prob += self.ra[i] == \
                 (self.max_gain_a - self.potential_gain_a[i])
@@ -203,6 +226,10 @@ class NashEquilibrium:
                 (self.max_gain_b - self.potential_gain_b[j])
 
     def _best_strategy_constraint(self):
+        '''
+        Constraints
+        '''
+                
         for i in range(self.m):
             self.prob += self.xa[i] <= self.sa[i]
             self.prob += self.ra[i] <= (1 - self.sa[i]) * self.max_regret_a
@@ -212,6 +239,10 @@ class NashEquilibrium:
             self.prob += self.rb[j] <= (1 - self.sb[j]) * self.max_regret_b
 
     def _make_constraints(self):
+        '''
+        Constraints
+        '''
+                
         self.prob += pulp.lpSum(self.xa) == 1.0 # stochastic vectors
         self.prob += pulp.lpSum(self.xb) == 1.0 # stochastic vectors
 
@@ -220,14 +251,29 @@ class NashEquilibrium:
         self._compute_risk()
         self._best_strategy_constraint()
 
-    def solve(self, verbose = False) -> np.array:
-        '''
-            Returns a couple (x,y) of pure strategies that corresponds 
-            to a Nash Equilibrium.
-            Validity and Scores of this couple can be verified 
-            using the static methods is_valid and score,
+    def solve(self, verbose: bool = False) -> tuple[np.array, np.array]:
+        """Find a pair of pure strategies that correspond to a Nash equilibrium.
 
-        '''
+        This method attempts to find a pair of pure strategies (x, y) that
+        constitute a Nash equilibrium for the given gain matrices A and B.
+        
+        The validity and scores of the resulting solution can be verified
+        using the `is_valid` and `score` static methods. Perhaps, if properly
+        configured, Pulp should not be able to give invalid solution.
+
+        Args:
+            verbose (bool, optional): If True, print additional information
+                about the solution process. Defaults to False.
+
+        Returns:
+            tuple[np.array, np.array]: A tuple containing the pure strategy
+                vectors for the two players, in the form (x, y), where x is
+                the pure strategy vector for the first player and y is the
+                pure strategy vector for the second player. 
+                A Nash Equilibrium should always exists, perhaps if no Nash
+                equilibrium is found, the method returns `None`.
+        """
+
         self.prob = pulp.LpProblem("Nash_Equilibrium", pulp.LpMinimize)
 
         # VARIABLES
