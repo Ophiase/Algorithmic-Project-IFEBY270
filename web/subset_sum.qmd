@@ -5,21 +5,31 @@ title: SubSet Sum
 ## Introduction
 
 ## Code
+
 To find a solution to the subset sum problem, create a subset :
+
 ```python
 SubSet(set, target)
 ```
+
 or
+
 ```python
 SubSet(set)
 ```
-With the last element of the set beeing the target.\
+
+With the last element of the set being the target. \
+
 Or generate a random one :
+
 ```python
 subset.generate_random_low_density_subset_proble(number_of_elements, density):
 ```
+
 If you dont specify parameters, the number of elements will be a random number between 0 and 20, and the density will be 0.5\
+
 Then call either solve_dynamic_prog or solve_LLL to solve the problem
+
 ### Examples
 
 ```{python}

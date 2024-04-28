@@ -9,6 +9,7 @@ book:
     - simplexe.qmd
     - nash_equilibrium.qmd
     - knapsac.qmd
+    - subset_sum.qmd
   downloads: [pdf]
 
 format:
