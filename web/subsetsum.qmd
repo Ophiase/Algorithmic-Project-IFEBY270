@@ -1,0 +1,42 @@
+---
+title: SubSet Sum
+---
+
+## Introduction
+
+## Code
+To find a solution to the subset sum problem, create a subset :
+```python
+SubSet(set, target)
+```
+or
+```python
+SubSet(set)
+```
+With the last element of the set beeing the target.\
+Or generate a random one :
+```python
+subset.generate_random_low_density_subset_proble(number_of_elements, density):
+```
+If you dont specify parameters, the number of elements will be a random number between 0 and 20, and the density will be 0.5\
+Then call either solve_dynamic_prog or solve_LLL to solve the problem
+### Examples
+
+```{python}
+#| echo: false
+from tests.subset_sum import TestSubSet_Sum
+from src.algorithm.knapsack.subset_sum import SubSet
+```
+```{python}
+problem = SubSet([23603, 6105, 5851, 19660, 8398, 8545, 14712], 37760)
+dynamic_solution = problem.solve_dynamic_prog()
+LLL_solution = problem.solve_LLL()
+```
+```{python}
+#| echo: false
+print(problem)
+print(dynamic_solution)
+print(LLL_solution)
+```
+solve_dynamic_prog returns a couple (target, chosen elemements), as if there is no solution to the problem, it will give the closest to the target.\
+solve_LLL returns a vector corresponding to the chosen elements
