@@ -2,7 +2,7 @@
 
 An algorithmic project for a University course. 
 - Implemented
-    - Simplexe
+    - Simplex
     - Nash Equilibrium
     - Knapsack + Reduction basis + Subset sum
 
@@ -26,7 +26,7 @@ make update_gamut
 
 To incorporate additional tests using unittest into `src/algorithm/<problem>/<problem>.py`, modify `tests/<problem>.py`.
 
-All methods with a name beginning with test_ will be executed as tests.
+All methods with a name beginning with `test_will` be executed as tests.
 
 Execute tests with:
 ```bash
@@ -35,7 +35,7 @@ python3 -m unittest tests.<test_name>
 
 ## Example
 
-To include another Nash Equilibrium example, edit `tests/nash_equilibrium.py`, and add the following method to the TestNashEquilibrium class:
+To include another Nash Equilibrium example, edit `tests/nash_equilibrium.py`, and add the following method to the `TestNashEquilibrium` class:
 
 ```python
 def test_example(self):
