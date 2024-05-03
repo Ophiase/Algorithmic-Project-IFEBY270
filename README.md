@@ -8,6 +8,17 @@ An algorithmic project for a University course.
 
 Visit : [Web Report](https://ophiase.github.io/Algorithmic-Project-IFEBY270/)
 
+# Installation
+
+Requirements : Numpy, Pulp
+
+```bash
+pip install numpy pulp
+# or 
+conda env create -f environment.yml
+conda activate algorithmic-project
+```
+
 # Execution
 
 Execute tests
