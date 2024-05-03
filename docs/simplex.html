@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Report - Algorithmic Project IFEBY270 - 2&nbsp; Simplexe</title>
+<title>Report - Algorithmic Project IFEBY270 - 2&nbsp; Simplex</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplexe.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./simplex.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplex</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,8 +180,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simplexe.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></span></a>
+  <a href="./simplex.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplex</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -215,7 +215,7 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a>
   <ul class="collapse">
   <li><a href="#definition-basic-solution-and-optimal-basic-solution" id="toc-definition-basic-solution-and-optimal-basic-solution" class="nav-link" data-scroll-target="#definition-basic-solution-and-optimal-basic-solution"><span class="header-section-number">2.1.1</span> <ins>Definition</ins> Basic solution and optimal basic solution</a></li>
-  <li><a href="#foreplay-data-organization" id="toc-foreplay-data-organization" class="nav-link" data-scroll-target="#foreplay-data-organization"><span class="header-section-number">2.1.2</span> <ins>Foreplay</ins> Data organization</a></li>
+  <li><a href="#preparation-data-organization" id="toc-preparation-data-organization" class="nav-link" data-scroll-target="#preparation-data-organization"><span class="header-section-number">2.1.2</span> <ins>Preparation</ins> Data organization</a></li>
   </ul></li>
   <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm"><span class="header-section-number">2.2</span> Algorithm</a>
   <ul class="collapse">
@@ -235,7 +235,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplex</span></h1>
 </div>
 
 
@@ -275,8 +275,8 @@ When an optimal basic solution is reached, i.e.&nbsp;one that maximizes the obje
 In this case, <span class="math inline">\((x,x'​) = (0,b)\)</span> constitutes a basic solution of the problem, and we also refer to the variables <span class="math inline">\(x'\)</span> as basic and the variables <span class="math inline">\(x\)</span> as non-basic. If the problem is unbounded, it has no optimal solution, and the solution below is admissible.<br>
 </p>
 </section>
-<section id="foreplay-data-organization" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="foreplay-data-organization"><span class="header-section-number">2.1.2</span> <ins>Foreplay</ins> Data organization</h3>
+<section id="preparation-data-organization" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="preparation-data-organization"><span class="header-section-number">2.1.2</span> <ins>Preparation</ins> Data organization</h3>
 <p>Let <span class="math inline">\(n\)</span> be the number of non-basic variables, and <span class="math inline">\(m\)</span> be the number of basic variables.<br>
 To perform the calculations, it is useful to organize the data in a table <span class="math inline">\(A\)</span> which initially has the following form:</p>
 <table class="table">
@@ -403,7 +403,7 @@ The program stops if:<br>
 <span class="math inline">\(4x_{1} + 1x_{2} + 2x_{3} \leq 36\)</span><br>
 <span class="math inline">\(x_{1},x_{2},x_{3} \geq 0\)</span><br>
 </p>
-<div id="7bb73a9f" class="cell" data-execution_count="2">
+<div id="36bc8299" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>canonical_form <span class="op">=</span> [</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>],</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">30</span>],</span>
@@ -416,13 +416,13 @@ The program stops if:<br>
 <pre><code>[✅]Optimal solution found.</code></pre>
 </div>
 </div>
-<div id="dee6d61e" class="cell" data-execution_count="3">
+<div id="d13f5562" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Basic Solution:  [8.0, 4.0, 0, 18.0, 0, 0]
 Objective function value:  28.0</code></pre>
 </div>
 </div>
-<div id="f5cf32d8" class="cell" data-execution_count="4">
+<div id="fcb0c5a9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>simplexe.print_table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['0', '0', '-1/6', '0', '-1/6', '-2/3', '-28']
@@ -437,7 +437,7 @@ Objective function value:  28.0</code></pre>
 <span class="math inline">\(-x_{1} - x_{2} \leq 3\)</span><br>
 <span class="math inline">\(-2x_{1} - 3x_{2} \leq 5\)</span><br>
 <span class="math inline">\(x_{1},x_{2} \geq 0\)</span></p>
-<div id="f3297fd9" class="cell" data-execution_count="6">
+<div id="06fc76df" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>canonical_form <span class="op">=</span> [</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">2</span>],</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>],</span>
@@ -450,7 +450,7 @@ Objective function value:  28.0</code></pre>
 <pre><code>[❌]No optimal solution found.</code></pre>
 </div>
 </div>
-<div id="72008707" class="cell" data-execution_count="7">
+<div id="d9075312" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>Basic Solution:  [0, 0, 3, 5]
 Objective function value:  0</code></pre>

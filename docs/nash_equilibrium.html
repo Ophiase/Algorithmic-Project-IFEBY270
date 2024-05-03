@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./knapsac.html" rel="next">
-<link href="./simplexe.html" rel="prev">
+<link href="./simplex.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -180,8 +180,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simplexe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></span></a>
+  <a href="./simplex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplex</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,7 +294,7 @@ Propertie :
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="examples" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.2.1</span> Examples</h3>
-<div id="3a6259a5" class="cell" data-execution_count="2">
+<div id="9da37070" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paper Rock Scissor</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>],</span>
@@ -303,30 +303,30 @@ Propertie :
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>])</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, <span class="op">-</span>A).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e2e167cc" class="cell" data-execution_count="3">
+<div id="57765f1f" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [0.33333333 0.33333333 0.33333333]
 y: [0.33333333 0.33333333 0.33333333]</code></pre>
 </div>
 </div>
-<div id="f19b5947" class="cell" data-execution_count="4">
+<div id="42f65a91" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-zero sum game</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]]) </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">4</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">1</span>]])</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="deefde34" class="cell" data-execution_count="5">
+<div id="30f08680" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [0. 1.]
 y: [1. 0.]</code></pre>
 </div>
 </div>
-<div id="672c67d7" class="cell" data-execution_count="6">
+<div id="27af6c2b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">3</span>, <span class="dv">2</span>], [<span class="dv">1</span>, <span class="dv">4</span>]]) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">1</span>], [<span class="dv">3</span>, <span class="dv">2</span>]])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>solution_x, solution_y <span class="op">=</span> NashEquilibrium(A, B).solve()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="25276516" class="cell" data-execution_count="7">
+<div id="59d32907" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>x: [1. 0.]
 y: [1. 0.]</code></pre>
@@ -842,8 +842,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./simplexe.html" class="pagination-link" aria-label="Simplexe">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplexe</span></span>
+      <a href="./simplex.html" class="pagination-link" aria-label="Simplex">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Simplex</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

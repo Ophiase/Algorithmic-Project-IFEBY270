@@ -1,5 +1,5 @@
 ---
-title: Simplexe
+title: Simplex
 ---
 
 ## Introduction
@@ -30,7 +30,7 @@ In this case, $(x,x'​) = (0,b)$ constitutes a basic solution of the problem, a
 If the problem is unbounded, it has no optimal solution, and the solution below is admissible.\
 
 
-### <ins>Foreplay</ins> Data organization
+### <ins>Preparation</ins> Data organization
 
 Let $n$ be the number of non-basic variables, and $m$ be the number of basic variables.\
 To perform the calculations, it is useful to organize the data in a table $A$ which initially has the following form:

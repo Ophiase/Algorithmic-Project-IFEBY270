@@ -6,7 +6,7 @@ book:
   title : "Report - Algorithmic Project IFEBY270"
   chapters:
     - index.qmd
-    - simplexe.qmd
+    - simplex.qmd
     - nash_equilibrium.qmd
     - knapsac.qmd
     - subset_sum.qmd
